@@ -43,7 +43,7 @@ import {
 import team2 from "assets/images/team-2.jpg";
 import logoSpotify from "assets/images/small-logos/logo-spotify.svg";
 
-function DashboardNavbar({ absolute, light, isMini, isHidden }) {
+function DashboardNavbar({ onChange, absolute, light, isMini, isHidden }) {
   const [navbarType, setNavbarType] = useState();
   const [controller, dispatch] = useSoftUIController();
   const { miniSidenav, transparentNavbar, fixedNavbar, openConfigurator } = controller;
@@ -57,6 +57,13 @@ function DashboardNavbar({ absolute, light, isMini, isHidden }) {
     } else {
       setNavbarType("static");
     }
+
+    // const filteredPersons = userData?.data?.list.filter((person) => {
+    //   return (
+    //     person.firstName.toLowerCase().includes(searchField.toLowerCase()) ||
+    //     person.lastName.toLowerCase().includes(searchField.toLowerCase())
+    //   );
+    // });
 
     // A function that sets the transparent state of the navbar.
     function handleTransparentNavbar() {
@@ -134,6 +141,7 @@ function DashboardNavbar({ absolute, light, isMini, isHidden }) {
           <SuiBox sx={(theme) => navbarRow(theme, { isMini })}>
             <SuiBox pr={1} style={{ visibility: isHidden }}>
               <SuiInput
+                onChange={onChange}
                 placeholder="Type here..."
                 icon={{ component: "search", direction: "left" }}
               />

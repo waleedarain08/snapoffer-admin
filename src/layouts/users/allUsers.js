@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 // @mui material components
 import Card from "@mui/material/Card";
@@ -7,6 +7,7 @@ import Card from "@mui/material/Card";
 import SuiBox from "components/SuiBox";
 import SuiTypography from "components/SuiTypography";
 import SuiAvatar from "components/SuiAvatar";
+import Switch from "@mui/material/Switch";
 // import SuiBadge from "components/SuiBadge";
 
 // Soft UI Dashboard React examples
@@ -14,7 +15,6 @@ import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "examples/Navbars/DashboardNavbar";
 // import Footer from "examples/Footer";
 import Table from "examples/Tables/Table";
-
 import dummy from "assets/images/dummy.png";
 
 // Data
@@ -66,14 +66,26 @@ function Function({ city, country }) {
   );
 }
 
-const checked = () => {
-  alert("asd");
-};
+// const checked = () => {
+//   alert("asd");
+// };
 
 export default function allUsers() {
   //   const { columns, rows } = usersTableData;
+  const [searchField, setSearchField] = useState("");
+  const [followsMe, setFollowsMe] = useState(true);
   const { data } = useQuery(GETALLUSERS);
-  console.log(data?.getAllUsers?.data, "data");
+  console.log(data?.getAllUsers?.data, "data?.getAllUsers?.data");
+
+  const handleChange = (e) => {
+    setSearchField(e.target.value);
+  };
+
+  const filteredPersons = data?.getAllUsers?.data?.filter(
+    (row) =>
+      row.firstName?.toLowerCase()?.includes(searchField?.toLowerCase()) ||
+      row.lastName?.toLowerCase()?.includes(searchField?.toLowerCase())
+  );
 
   const columns = [
     { name: "FullName", align: "left" },
@@ -83,7 +95,7 @@ export default function allUsers() {
     { name: "action", align: "center" },
   ];
 
-  const rows = data?.getAllUsers?.data?.map((row) => ({
+  const rows = filteredPersons?.map((row) => ({
     FullName: (
       <Author
         image={`${row.avatar !== null ? row.avatar : dummy}`}
@@ -109,22 +121,23 @@ export default function allUsers() {
       </SuiTypography>
     ),
     action: (
-      <SuiTypography
-        style={{ cursor: "pointer" }}
-        component="a"
-        onClick={() => checked()}
-        variant="caption"
-        color="secondary"
-        fontWeight="medium"
-      >
-        Edit
-      </SuiTypography>
+      //   <SuiTypography
+      //     style={{ cursor: "pointer" }}
+      //     component="a"
+      //     onClick={() => checked()}
+      //     variant="caption"
+      //     color="secondary"
+      //     fontWeight="medium"
+      //   >
+      //     Edit
+      //   </SuiTypography>
+      <Switch checked={followsMe} onChange={() => setFollowsMe(!followsMe)} />
     ),
   }));
 
   return (
     <DashboardLayout>
-      <DashboardNavbar />
+      <DashboardNavbar onChange={handleChange} />
       <SuiBox py={3}>
         <SuiBox mb={3}>
           <Card>
