@@ -1,22 +1,6 @@
-/**
-=========================================================
-* Soft UI Dashboard React - v3.1.0
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/soft-ui-dashboard-react
-* Copyright 2022 Creative Tim (https://www.creative-tim.com)
-
-Coded by www.creative-tim.com
-
- =========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-*/
-
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 
 // react-github-btn
-// import GitHubButton from "react-github-btn";
 
 // @mui material components
 import Divider from "@mui/material/Divider";
@@ -46,11 +30,19 @@ import {
   setSidenavColor,
 } from "context";
 
+import UserContext from "../../context/userContext";
+
 function Configurator() {
   const [controller, dispatch] = useSoftUIController();
   const { openConfigurator, transparentSidenav, fixedNavbar, sidenavColor } = controller;
   const [disabled, setDisabled] = useState(false);
   const sidenavColors = ["primary", "dark", "info", "success", "warning", "error"];
+
+  const statee = useContext(UserContext);
+
+  const logout = () => {
+    statee.setUser("");
+  };
 
   // Use the useEffect hook to change the button state for the sidenav type based on window size.
   useEffect(() => {
@@ -200,6 +192,7 @@ function Configurator() {
 
         <SuiButton
           color="error"
+          onClick={() => logout()}
           variant={transparentSidenav ? "outlined" : "gradient"}
           disabled={disabled}
           fullWidth

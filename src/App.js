@@ -1,8 +1,7 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 
 // react-router components
 import { Routes, Route, Navigate, useLocation } from "react-router-dom";
-
 // @mui material components
 import { ThemeProvider } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -29,16 +28,28 @@ import routes from "routes";
 
 // Soft UI Dashboard React contexts
 import { useSoftUIController, setMiniSidenav, setOpenConfigurator } from "context";
+import SignIn from "layouts/authentication/sign-in";
 
 // Images
 import brand from "assets/images/logo-ct.png";
+
+import UserContext from "./context/userContext";
 
 export default function App() {
   const [controller, dispatch] = useSoftUIController();
   const { miniSidenav, direction, openConfigurator, sidenavColor } = controller;
   const [onMouseEnter, setOnMouseEnter] = useState(false);
+  const [user, setUser] = useState("asdasd");
   // const [rtlCache, setRtlCache] = useState(null);
   const { pathname } = useLocation();
+
+  const value = useMemo(
+    () => ({
+      user,
+      setUser,
+    }),
+    [user]
+  );
 
   // Cache for the rtl
   // useMemo(() => {
@@ -119,25 +130,35 @@ export default function App() {
     </SuiBox>
   );
 
+  console.log(user, "user");
+
   return (
-    <ThemeProvider theme={theme}>
-      <CssBaseline />
-      <>
-        <Sidenav
-          color={sidenavColor}
-          brand={brand}
-          brandName="Admin Dashboard"
-          routes={fildtedRoutes}
-          onMouseEnter={handleOnMouseEnter}
-          onMouseLeave={handleOnMouseLeave}
-        />
-        <Configurator />
-        {configsButton}
-      </>
-      <Routes>
-        {getRoutes(routes)}
-        <Route path="*" element={<Navigate to="/dashboard" />} />
-      </Routes>
-    </ThemeProvider>
+    <UserContext.Provider value={value}>
+      <ThemeProvider theme={theme}>
+        {user ? (
+          <>
+            <CssBaseline />
+            <>
+              <Sidenav
+                color={sidenavColor}
+                brand={brand}
+                brandName="Admin Dashboard"
+                routes={fildtedRoutes}
+                onMouseEnter={handleOnMouseEnter}
+                onMouseLeave={handleOnMouseLeave}
+              />
+              <Configurator />
+              {configsButton}
+            </>
+            <Routes>
+              {getRoutes(routes)}
+              <Route path="*" element={<Navigate to="/dashboard" />} />
+            </Routes>
+          </>
+        ) : (
+          <SignIn />
+        )}
+      </ThemeProvider>
+    </UserContext.Provider>
   );
 }

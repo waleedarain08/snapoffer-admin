@@ -1,4 +1,4 @@
-// import { useState } from "react";
+import { useContext } from "react";
 
 // react-router-dom components
 // import { Link } from "react-router-dom";
@@ -18,10 +18,18 @@ import CoverLayout from "layouts/authentication/components/CoverLayout";
 // Images
 import curved9 from "assets/images/curved-images/curved-6.jpg";
 
+import UserContext from "../../../context/userContext";
+
 function SignIn() {
   // const [rememberMe, setRememberMe] = useState(true);
 
   // const handleSetRememberMe = () => setRememberMe(!rememberMe);
+
+  const statee = useContext(UserContext);
+
+  const logIN = () => {
+    statee.setUser("1");
+  };
 
   return (
     <CoverLayout
@@ -58,7 +66,7 @@ function SignIn() {
           </SuiTypography>
         </SuiBox> */}
         <SuiBox mt={4} mb={1}>
-          <SuiButton variant="gradient" color="info" fullWidth>
+          <SuiButton onClick={() => logIN()} variant="gradient" color="info" fullWidth>
             sign in
           </SuiButton>
         </SuiBox>
