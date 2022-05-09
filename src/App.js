@@ -1,5 +1,5 @@
 import { useState, useEffect, useMemo } from "react";
-
+/* eslint-disable import/prefer-default-export */
 // react-router components
 import { Routes, Route, Navigate, useLocation } from "react-router-dom";
 // @mui material components

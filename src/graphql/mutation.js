@@ -1,44 +1,34 @@
 import { gql } from "@apollo/client";
 
-export const UpdateUsers = gql`
-  mutation UpdateUser($updateUserId: Int!, $email: String!, $name: String, $isBlocked: Boolean) {
-    updateUser(id: $updateUserId, email: $email, name: $name, isBlocked: $isBlocked) {
-      status
-      message
-      data {
-        id
-        email
-        name
-        isVerified
-      }
-    }
-  }
-`;
-
-export const DeleteUsers = gql`
-  mutation DeleteUser($deleteUserId: Int!) {
-    deleteUser(id: $deleteUserId) {
+const ADDCATEGORY = gql`
+  mutation AddCategory($name: String, $parentId: Int) {
+    addCategory(name: $name, parentId: $parentId) {
       status
       message
     }
   }
 `;
 
-export const CreateCatagory = gql`
-  mutation CreateCatagory(
-    $image: String!
-    $description: String!
-    $backgroundColor: String!
-    $title: String!
-  ) {
-    CreateCatagory(
-      Image: $image
-      Description: $description
-      BackgroundColor: $backgroundColor
-      Title: $title
-    ) {
+const ADDUPDATE = gql`
+  mutation UpdateCategory($updateCategoryId: Int, $name: String) {
+    updateCategory(id: $updateCategoryId, name: $name) {
       status
       message
     }
   }
 `;
+
+const DELETECATEGORY = gql`
+  mutation DeleteCategory($deleteCategoryId: Int) {
+    deleteCategory(id: $deleteCategoryId) {
+      status
+      message
+    }
+  }
+`;
+
+export default {
+  ADDCATEGORY,
+  ADDUPDATE,
+  DELETECATEGORY,
+};

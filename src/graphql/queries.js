@@ -1,3 +1,4 @@
+/* eslint-disable import/prefer-default-export */
 import { gql } from "@apollo/client";
 
 const GETALLUSERS = gql`
@@ -29,4 +30,27 @@ const GETALLUSERS = gql`
   }
 `;
 
-export default GETALLUSERS;
+const GETALLCATEGORIES = gql`
+  query Query {
+    getCategories {
+      status
+      message
+      error
+      data {
+        id
+        parentId
+        name
+        child {
+          id
+          parentId
+          name
+        }
+      }
+    }
+  }
+`;
+
+export default {
+  GETALLUSERS,
+  GETALLCATEGORIES,
+};

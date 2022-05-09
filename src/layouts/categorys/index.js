@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 // @mui material components
 import Card from "@mui/material/Card";
@@ -7,7 +7,8 @@ import Card from "@mui/material/Card";
 import SuiBox from "components/SuiBox";
 import SuiTypography from "components/SuiTypography";
 import SuiAvatar from "components/SuiAvatar";
-import Switch from "@mui/material/Switch";
+// import Switch from "@mui/material/Switch";
+import SuiButton from "components/SuiButton";
 // import SuiBadge from "components/SuiBadge";
 
 // Soft UI Dashboard React examples
@@ -15,7 +16,7 @@ import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "examples/Navbars/DashboardNavbar";
 // import Footer from "examples/Footer";
 import Table from "examples/Tables/Table";
-import dummy from "assets/images/dummy.png";
+import Dot from "assets/images/dot.png";
 
 // Data
 // import usersTableData from "layouts/users/data/usersTableData";
@@ -53,73 +54,71 @@ function Author({ image, name, email, rowData }) {
   );
 }
 
-function Function({ city, country }) {
-  return (
-    <SuiBox display="flex" flexDirection="column">
-      <SuiTypography variant="caption" fontWeight="medium" color="text">
-        {city}
-      </SuiTypography>
-      <SuiTypography variant="caption" color="secondary">
-        {country}
-      </SuiTypography>
-    </SuiBox>
-  );
-}
-
-// const checked = () => {
-//   alert("asd");
-// };
-
-export default function allUsers() {
+export default function Category() {
+  const navigate = useNavigate();
   //   const { columns, rows } = usersTableData;
   const [searchField, setSearchField] = useState("");
-  const [followsMe, setFollowsMe] = useState(true);
-  const { data } = useQuery(utils?.default?.GETALLUSERS);
+  const { data, refetch } = useQuery(utils?.default?.GETALLCATEGORIES);
+
+  useEffect(() => {
+    refetch();
+  }, []);
 
   const handleChange = (e) => {
     setSearchField(e.target.value);
   };
 
-  const filteredPersons = data?.getAllUsers?.data?.filter(
-    (row) =>
-      row.firstName?.toLowerCase()?.includes(searchField?.toLowerCase()) ||
-      row.lastName?.toLowerCase()?.includes(searchField?.toLowerCase())
+  const filteredPersons = data?.getCategories?.data?.filter((row) =>
+    row.name?.toLowerCase()?.includes(searchField?.toLowerCase())
   );
 
   const columns = [
-    { name: "FullName", align: "left" },
-    { name: "Residence", align: "left" },
-    { name: "PhoneNumber", align: "center" },
+    { name: "Category", align: "left" },
     { name: "Created", align: "center" },
     { name: "action", align: "center" },
   ];
 
   const rows = filteredPersons?.map((row) => ({
-    FullName: (
-      <Author
-        image={`${row.avatar !== null ? row.avatar : dummy}`}
-        name={`${row.firstName !== null ? row.firstName : ""}  ${
-          row.lastName !== null ? row.lastName : ""
-        }`}
-        email={row.email}
-        rowData={row}
-      />
+    Category: (
+      <Author image={`${Dot}`} name={`${row.name !== null ? row.name : ""}`} rowData={row} />
     ),
-    Residence: <Function city={row.city} country={row.country} />,
-    PhoneNumber: (
-      <SuiTypography variant="caption" color="secondary" fontWeight="medium">
-        {row.phoneNumber !== null ? row.phoneNumber : "!"}
-      </SuiTypography>
-    ),
-    // status: (
-    //   <SuiBadge variant="gradient" badgeContent="online" color="success" size="xs" container />
-    // ),
     Created: (
       <SuiTypography variant="caption" color="secondary" fontWeight="medium">
         {moment(row.createdAt).format("MM/DD/YYYY")}
       </SuiTypography>
     ),
-    action: <Switch checked={followsMe} onChange={() => setFollowsMe(!followsMe)} />,
+    action: (
+      <>
+        <SuiTypography
+          style={{ cursor: "pointer" }}
+          onClick={() => {
+            navigate("/EditCategory", { state: { data: row } });
+          }}
+          component="a"
+          variant="caption"
+          color="secondary"
+          fontWeight="medium"
+        >
+          Edit
+        </SuiTypography>
+
+        <SuiTypography component="a" variant="caption" color="secondary" fontWeight="medium">
+          &nbsp;/&nbsp;
+        </SuiTypography>
+        <SuiTypography
+          style={{ cursor: "pointer" }}
+          onClick={() => {
+            navigate("/EditCategory", { state: { data: row } });
+          }}
+          component="a"
+          variant="caption"
+          color="error"
+          fontWeight="medium"
+        >
+          Delete
+        </SuiTypography>
+      </>
+    ),
   }));
 
   return (
@@ -129,7 +128,17 @@ export default function allUsers() {
         <SuiBox mb={3}>
           <Card>
             <SuiBox display="flex" justifyContent="space-between" alignItems="center" p={3}>
-              <SuiTypography variant="h6">All User</SuiTypography>
+              <SuiTypography variant="h6">All Categories</SuiTypography>
+              <SuiButton
+                onClick={() => {
+                  navigate("/AddCategory");
+                }}
+                color="info"
+                variant="gradient"
+                size="small"
+              >
+                Add Category
+              </SuiButton>
             </SuiBox>
             <SuiBox
               sx={{
