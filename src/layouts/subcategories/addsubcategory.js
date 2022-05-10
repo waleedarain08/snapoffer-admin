@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import Grid from "@mui/material/Grid";
 import Card from "@mui/material/Card";
 
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 
 // Soft UI Dashboard React components
 import SuiTypography from "components/SuiTypography";
@@ -20,14 +20,15 @@ import * as utils from "../../graphql/mutation";
 
 // Data
 
-function addCategory() {
+function Addsubcategory() {
   const navigate = useNavigate();
+  const location = useLocation();
   const { addToast } = useToasts();
   const [newCategory, setnewCategory] = useState("");
-  const [createcategory, { data }] = useMutation(utils?.default?.ADDCATEGORY, {
+  const [createcategory, { data }] = useMutation(utils?.default?.ADDSUBCATEGORY, {
     variables: {
       name: newCategory,
-      parentId: null,
+      parentId: location?.state?.data,
     },
   });
 
@@ -37,9 +38,12 @@ function addCategory() {
         appearance: "success",
         autoDismiss: true,
       });
-      navigate("/categorys");
+      navigate("/Subcategories", {
+        state: { data: location?.state?.data },
+      });
     }
   }, [data]);
+
   return (
     <DashboardLayout>
       <DashboardNavbar />
@@ -49,19 +53,19 @@ function addCategory() {
             <Card className="h-100">
               <SuiBox pt={3} px={3}>
                 <SuiTypography variant="h6" fontWeight="medium">
-                  Add New Category
+                  Add New Sub-Category
                 </SuiTypography>
                 <SuiBox mt={2} mb={2}>
                   <SuiBox mb={2}>
                     <SuiBox mb={2} ml={0.5}>
                       <SuiTypography component="label" variant="caption" fontWeight="bold">
-                        Category Name
+                        Sub-Category Name
                       </SuiTypography>
                     </SuiBox>
                     <SuiInput
                       onChange={(e) => setnewCategory(e.target.value)}
                       type="text"
-                      placeholder="Category Name"
+                      placeholder="Sub-Category Name"
                     />
                   </SuiBox>
                 </SuiBox>
@@ -72,7 +76,7 @@ function addCategory() {
                     color="info"
                     fullWidth
                   >
-                    Add Category
+                    Add Sub-Category
                   </SuiButton>
                 </SuiBox>
               </SuiBox>
@@ -85,4 +89,4 @@ function addCategory() {
   );
 }
 
-export default addCategory;
+export default Addsubcategory;

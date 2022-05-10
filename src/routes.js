@@ -21,6 +21,9 @@ import Office from "examples/Icons/Office";
 // import SpaceShip from "examples/Icons/SpaceShip";
 import CustomerSupport from "examples/Icons/CustomerSupport";
 import CreditCard from "examples/Icons/CreditCard";
+import Subcategories from "layouts/subcategories";
+import Editsubcategory from "layouts/subcategories/editsubcategory";
+import Addsubcategory from "layouts/subcategories/addsubcategory";
 // import Cube from "examples/Icons/Cube";
 
 const routes = [
@@ -133,6 +136,37 @@ const routes = [
     noCollapse: true,
     isSideBarActive: false,
   },
+  {
+    type: "collapse",
+    name: "Subcategories",
+    key: "Subcategories",
+    route: "/Subcategories",
+    icon: <CustomerSupport size="12px" />,
+    component: <Subcategories />,
+    noCollapse: true,
+    isSideBarActive: false,
+  },
+  {
+    type: "collapse",
+    name: "Editsubcategory",
+    key: "Editsubcategory",
+    route: "/Editsubcategory",
+    icon: <CustomerSupport size="12px" />,
+    component: <Editsubcategory />,
+    noCollapse: true,
+    isSideBarActive: false,
+  },
+  {
+    type: "collapse",
+    name: "Addsubcategory",
+    key: "Addsubcategory",
+    route: "/Addsubcategory",
+    icon: <CustomerSupport size="12px" />,
+    component: <Addsubcategory />,
+    noCollapse: true,
+    isSideBarActive: false,
+  },
+
   // {
   //   type: "collapse",
   //   name: "Sign In",

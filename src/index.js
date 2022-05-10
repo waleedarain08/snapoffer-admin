@@ -6,7 +6,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 
 // Soft UI Dashboard React Context Provider
 import { SoftUIControllerProvider } from "context";
-
+import { ToastProvider } from "react-toast-notifications";
 import { ApolloClient, InMemoryCache, ApolloProvider } from "@apollo/client";
 
 const client = new ApolloClient({
@@ -18,7 +18,9 @@ ReactDOM.render(
   <BrowserRouter>
     <ApolloProvider client={client}>
       <SoftUIControllerProvider>
-        <App />
+        <ToastProvider>
+          <App />
+        </ToastProvider>
       </SoftUIControllerProvider>
     </ApolloProvider>
   </BrowserRouter>,

@@ -31,20 +31,27 @@ const GETALLUSERS = gql`
 `;
 
 const GETALLCATEGORIES = gql`
-  query Query {
-    getCategories {
+  query GetCategories($where: whereCategoryInput) {
+    getCategories(where: $where) {
       status
       message
-      error
       data {
         id
         parentId
         name
-        child {
-          id
-          parentId
-          name
-        }
+      }
+    }
+  }
+`;
+const GETSUBALLCATEGORIES = gql`
+  query GetCategories($where: whereCategoryInput) {
+    getCategories(where: $where) {
+      status
+      message
+      data {
+        id
+        parentId
+        name
       }
     }
   }
@@ -53,4 +60,5 @@ const GETALLCATEGORIES = gql`
 export default {
   GETALLUSERS,
   GETALLCATEGORIES,
+  GETSUBALLCATEGORIES,
 };

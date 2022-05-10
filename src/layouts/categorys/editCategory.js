@@ -10,7 +10,7 @@ import SuiTypography from "components/SuiTypography";
 import SuiBox from "components/SuiBox";
 import SuiInput from "components/SuiInput";
 import SuiButton from "components/SuiButton";
-
+import { useToasts } from "react-toast-notifications";
 // Soft UI Dashboard React examples
 import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "examples/Navbars/DashboardNavbar";
@@ -23,6 +23,7 @@ import * as utils from "../../graphql/mutation";
 function editCategory() {
   const navigate = useNavigate();
   const location = useLocation();
+  const { addToast } = useToasts();
   const [newCategory, setnewCategory] = useState("");
 
   useEffect(() => {
@@ -34,9 +35,15 @@ function editCategory() {
       name: newCategory,
     },
   });
-  if (data?.updateCategory?.status) {
-    navigate("/categorys");
-  }
+  useEffect(() => {
+    if (data?.updateCategory?.status) {
+      addToast(data?.updateCategory?.message, {
+        appearance: "success",
+        autoDismiss: true,
+      });
+      navigate("/categorys");
+    }
+  }, [data]);
   return (
     <DashboardLayout>
       <DashboardNavbar />

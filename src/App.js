@@ -130,8 +130,6 @@ export default function App() {
     </SuiBox>
   );
 
-  console.log(user, "user");
-
   return (
     <UserContext.Provider value={value}>
       <ThemeProvider theme={theme}>

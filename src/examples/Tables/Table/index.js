@@ -23,8 +23,8 @@ import typography from "assets/theme/base/typography";
 import borders from "assets/theme/base/borders";
 
 function Table({ columns, rows }) {
-  console.log(rows, "rows");
   const { light } = colors;
+  const Newrows = rows;
   const { size, fontWeightBold } = typography;
   const { borderWidth } = borders;
 
@@ -66,7 +66,6 @@ function Table({ columns, rows }) {
 
   const renderRows = rows.map((row, key) => {
     const rowKey = `row-${key}`;
-
     const tableRow = columns.map(({ name, align }) => {
       let template;
 
@@ -122,7 +121,15 @@ function Table({ columns, rows }) {
           <SuiBox component="thead">
             <TableRow>{renderColumns}</TableRow>
           </SuiBox>
-          <TableBody>{renderRows}</TableBody>
+          <TableBody>
+            {Newrows?.length !== 0 ? (
+              renderRows
+            ) : (
+              <SuiTypography variant="button" fontWeight="medium" style={{ margin: "25px" }}>
+                No Data Found
+              </SuiTypography>
+            )}
+          </TableBody>
         </MuiTable>
       </TableContainer>
     ),

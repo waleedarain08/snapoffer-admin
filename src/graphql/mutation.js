@@ -27,8 +27,18 @@ const DELETECATEGORY = gql`
   }
 `;
 
+const ADDSUBCATEGORY = gql`
+  mutation AddCategory($name: String, $parentId: Int) {
+    addCategory(name: $name, parentId: $parentId) {
+      status
+      message
+    }
+  }
+`;
+
 export default {
   ADDCATEGORY,
   ADDUPDATE,
+  ADDSUBCATEGORY,
   DELETECATEGORY,
 };

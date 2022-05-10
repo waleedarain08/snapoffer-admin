@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 // @mui material components
 import Card from "@mui/material/Card";
 
@@ -7,7 +7,6 @@ import Card from "@mui/material/Card";
 import SuiBox from "components/SuiBox";
 import SuiTypography from "components/SuiTypography";
 import SuiAvatar from "components/SuiAvatar";
-import { useToasts } from "react-toast-notifications";
 // import Switch from "@mui/material/Switch";
 import SuiButton from "components/SuiButton";
 // import SuiBadge from "components/SuiBadge";
@@ -17,7 +16,7 @@ import DashboardNavbar from "examples/Navbars/DashboardNavbar";
 // import Footer from "examples/Footer";
 import Table from "examples/Tables/Table";
 import Dot from "assets/images/dot.png";
-
+import { useToasts } from "react-toast-notifications";
 // import usersTableData from "layouts/users/data/usersTableData";
 import moment from "moment";
 
@@ -25,21 +24,9 @@ import { useQuery, useMutation } from "@apollo/client";
 import * as utils from "../../graphql/queries";
 import * as Allmutaions from "../../graphql/mutation";
 
-function Author({ image, name, email, rowData }) {
-  const navigate = useNavigate();
-
-  const moveit = (alldata) => {
-    navigate("/Subcategories", { state: { data: alldata } });
-  };
+function Author({ image, name, email }) {
   return (
-    <SuiBox
-      display="flex"
-      alignItems="center"
-      px={1}
-      py={0.5}
-      onClick={() => moveit(rowData)}
-      style={{ cursor: "pointer" }}
-    >
+    <SuiBox display="flex" alignItems="center" px={1} py={0.5}>
       <SuiBox mr={2}>
         <SuiAvatar src={image} alt={name} size="sm" variant="rounded" />
       </SuiBox>
@@ -55,19 +42,26 @@ function Author({ image, name, email, rowData }) {
   );
 }
 
-export default function Category() {
+export default function Subcategories() {
   const navigate = useNavigate();
+  const location = useLocation();
   const { addToast } = useToasts();
   //   const { columns, rows } = usersTableData;
+
   const [searchField, setSearchField] = useState("");
-  const { data, refetch } = useQuery(utils?.default?.GETALLCATEGORIES, {
+  const { data, refetch } = useQuery(utils?.default?.GETSUBALLCATEGORIES, {
     variables: {
       where: {
-        parentId: null,
+        parentId: location?.state?.data?.id ? location?.state?.data?.id : location?.state?.data,
       },
     },
   });
+
   const [Deletecategory, { data: newDAta }] = useMutation(Allmutaions?.default?.DELETECATEGORY);
+
+  useEffect(() => {
+    refetch();
+  }, []);
 
   useEffect(() => {
     if (newDAta?.deleteCategory?.status) {
@@ -79,10 +73,6 @@ export default function Category() {
     }
   }, [newDAta]);
 
-  useEffect(() => {
-    refetch();
-  }, []);
-
   const handleChange = (e) => {
     setSearchField(e.target.value);
   };
@@ -92,7 +82,7 @@ export default function Category() {
   );
 
   const columns = [
-    { name: "Category", align: "left" },
+    { name: "Sub_Category", align: "left" },
     { name: "Created", align: "center" },
     { name: "action", align: "center" },
   ];
@@ -111,7 +101,7 @@ export default function Category() {
   };
 
   const rows = filteredPersons?.map((row) => ({
-    Category: (
+    Sub_Category: (
       <Author image={`${Dot}`} name={`${row.name !== null ? row.name : ""}`} rowData={row} />
     ),
     Created: (
@@ -124,7 +114,7 @@ export default function Category() {
         <SuiTypography
           style={{ cursor: "pointer" }}
           onClick={() => {
-            navigate("/EditCategory", { state: { data: row } });
+            navigate("/Editsubcategory", { state: { data: row } });
           }}
           component="a"
           variant="caption"
@@ -157,16 +147,22 @@ export default function Category() {
         <SuiBox mb={3}>
           <Card>
             <SuiBox display="flex" justifyContent="space-between" alignItems="center" p={3}>
-              <SuiTypography variant="h6">All Categories</SuiTypography>
+              <SuiTypography variant="h6">All Sub-Categories</SuiTypography>
               <SuiButton
                 onClick={() => {
-                  navigate("/AddCategory");
+                  navigate("/Addsubcategory", {
+                    state: {
+                      data: location?.state?.data?.id
+                        ? location?.state?.data?.id
+                        : location?.state?.data,
+                    },
+                  });
                 }}
                 color="info"
                 variant="gradient"
                 size="small"
               >
-                Add Category
+                Add Sub-Category
               </SuiButton>
             </SuiBox>
             <SuiBox
