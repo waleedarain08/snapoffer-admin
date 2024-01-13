@@ -48,9 +48,6 @@
     "install:peer-deps": "npm install --legacy-peer-deps"
   },
   "eslintConfig": {
-    "extends": [
-      "react-app"
-    ]
   },
   "browserslist": {
     "production": [
