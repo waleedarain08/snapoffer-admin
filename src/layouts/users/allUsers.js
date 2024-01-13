@@ -7,7 +7,7 @@ import Card from "@mui/material/Card";
 import SuiBox from "components/SuiBox";
 import SuiTypography from "components/SuiTypography";
 import SuiAvatar from "components/SuiAvatar";
-import Switch from "@mui/material/Switch";
+// import Switch from "@mui/material/Switch";
 // import SuiBadge from "components/SuiBadge";
 
 // Soft UI Dashboard React examples
@@ -54,14 +54,15 @@ function Author({ image, name, email, rowData }) {
 }
 
 function Function({ city, country }) {
+  console.log(country);
   return (
     <SuiBox display="flex" flexDirection="column">
       <SuiTypography variant="caption" fontWeight="medium" color="text">
         {city}
       </SuiTypography>
-      <SuiTypography variant="caption" color="secondary">
+      {/* <SuiTypography variant="caption" color="secondary">
         {country}
-      </SuiTypography>
+      </SuiTypography> */}
     </SuiBox>
   );
 }
@@ -73,7 +74,7 @@ function Function({ city, country }) {
 export default function allUsers() {
   //   const { columns, rows } = usersTableData;
   const [searchField, setSearchField] = useState("");
-  const [followsMe, setFollowsMe] = useState(true);
+  // const [followsMe, setFollowsMe] = useState(true);
   const { data } = useQuery(utils?.default?.GETALLUSERS);
 
   const handleChange = (e) => {
@@ -88,10 +89,10 @@ export default function allUsers() {
 
   const columns = [
     { name: "FullName", align: "left" },
-    { name: "Residence", align: "left" },
+    { name: "City", align: "left" },
     { name: "PhoneNumber", align: "center" },
     { name: "Created", align: "center" },
-    { name: "action", align: "center" },
+    { name: "Type", align: "center" },
   ];
 
   const rows = filteredPersons?.map((row) => ({
@@ -105,21 +106,17 @@ export default function allUsers() {
         rowData={row}
       />
     ),
-    Residence: <Function city={row.city} country={row.country} />,
-    PhoneNumber: (
-      <SuiTypography variant="caption" color="secondary" fontWeight="medium">
-        {row.phoneNumber !== null ? row.phoneNumber : "!"}
-      </SuiTypography>
-    ),
-    // status: (
-    //   <SuiBadge variant="gradient" badgeContent="online" color="success" size="xs" container />
-    // ),
+    City: <Function city={row.city} />,
     Created: (
       <SuiTypography variant="caption" color="secondary" fontWeight="medium">
         {moment(row.createdAt).format("MM/DD/YYYY")}
       </SuiTypography>
     ),
-    action: <Switch checked={followsMe} onChange={() => setFollowsMe(!followsMe)} />,
+    Type: (
+      <SuiTypography variant="caption" color="secondary" fontWeight="medium">
+        {row.type}
+      </SuiTypography>
+    ),
   }));
 
   return (
