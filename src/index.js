@@ -10,7 +10,7 @@ import { ToastProvider } from "react-toast-notifications";
 import { ApolloClient, InMemoryCache, ApolloProvider } from "@apollo/client";
 
 const client = new ApolloClient({
-  uri: "https://snapoffer-a69f05cdbe71.herokuapp.com",
+  uri: "https://snapoffer-a69f05cdbe71.herokuapp.com/graphql",
   cache: new InMemoryCache(),
 });
 

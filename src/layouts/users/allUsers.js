@@ -109,7 +109,7 @@ export default function allUsers() {
     City: <Function city={row.city} />,
     Created: (
       <SuiTypography variant="caption" color="secondary" fontWeight="medium">
-        {moment(row.createdAt).format("MM/DD/YYYY")}
+        {moment(row.createdAt).format("DD/MM/YYYY")}
       </SuiTypography>
     ),
     Type: (
