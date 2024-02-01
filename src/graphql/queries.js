@@ -29,6 +29,35 @@ const GETALLUSERS = gql`
   }
 `;
 
+const GETUSERSWHERE = gql`
+  query GetUsers($where: whereUserInput) {
+    getAllUsers(where: $where) {
+      status
+      message
+      data {
+        id
+        email
+        firstName
+        lastName
+        avatar
+        dob
+        phoneNumber
+        country
+        city
+        type
+        status
+        stripeCustomerId
+        createdAt
+        deviceId
+        isVerified
+        updatedAt
+        providerId
+        registrationType
+      }
+    }
+  }
+`;
+
 const GETALLCATEGORIES = gql`
   query GetCategories($where: whereCategoryInput) {
     getCategories(where: $where) {
@@ -60,4 +89,5 @@ export default {
   GETALLUSERS,
   GETALLCATEGORIES,
   GETSUBALLCATEGORIES,
+  GETUSERSWHERE,
 };

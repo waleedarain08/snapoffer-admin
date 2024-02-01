@@ -10,7 +10,8 @@ import EditCategory from "layouts/categorys/editCategory";
 import Profile from "layouts/profile";
 // import SignIn from "layouts/authentication/sign-in";
 // import SignUp from "layouts/authentication/sign-up";
-import Users from "layouts/users/allUsers";
+import BusinessUserList from "layouts/users/BusinessUserList";
+import CustomerUserList from "layouts/users/CustomerUserList";
 import UserDetails from "layouts/users/userProfile/userDetails";
 
 // Soft UI Dashboard React icons
@@ -49,11 +50,21 @@ const routes = [
   },
   {
     type: "collapse",
-    name: "Users",
-    key: "users",
-    route: "/users",
+    name: "Business Users",
+    key: "business-users",
+    route: "/business-users",
     icon: <Office size="12px" />,
-    component: <Users />,
+    component: <BusinessUserList />,
+    noCollapse: true,
+    isSideBarActive: true,
+  },
+  {
+    type: "collapse",
+    name: "Customer Users",
+    key: "customer-users",
+    route: "/customer-users",
+    icon: <Office size="12px" />,
+    component: <CustomerUserList />,
     noCollapse: true,
     isSideBarActive: true,
   },

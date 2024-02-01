@@ -23,6 +23,7 @@ import moment from "moment";
 
 import { useQuery } from "@apollo/client";
 import * as utils from "../../graphql/queries";
+import { UserType } from '../../constants';
 
 function Author({ image, name, email, rowData }) {
   const navigate = useNavigate();
@@ -71,11 +72,17 @@ function Function({ city, country }) {
 //   alert("asd");
 // };
 
-export default function allUsers() {
+export default function BusinessUserList() {
   //   const { columns, rows } = usersTableData;
   const [searchField, setSearchField] = useState("");
   // const [followsMe, setFollowsMe] = useState(true);
-  const { data } = useQuery(utils?.default?.GETALLUSERS);
+  const { data } = useQuery(utils?.default?.GETUSERSWHERE, {
+    variables: {
+      where: {
+        type: UserType.Business
+      }
+    }
+  });
 
   const handleChange = (e) => {
     setSearchField(e.target.value);
@@ -126,7 +133,7 @@ export default function allUsers() {
         <SuiBox mb={3}>
           <Card>
             <SuiBox display="flex" justifyContent="space-between" alignItems="center" p={3}>
-              <SuiTypography variant="h6">All User</SuiTypography>
+              <SuiTypography variant="h6">Business Users</SuiTypography>
             </SuiBox>
             <SuiBox
               sx={{
