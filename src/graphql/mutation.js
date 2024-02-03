@@ -36,9 +36,24 @@ const ADDSUBCATEGORY = gql`
   }
 `;
 
+const UPDATE_USER_STATUS = gql`
+  mutation UpdateUserStatus($userId: Int!, $status: Boolean) {
+    updateStatus(id: $userId, status: $status) {
+      status
+      message
+      error
+      data {
+        id
+        status
+      }
+    }
+  }
+`
+
 export default {
   ADDCATEGORY,
   ADDUPDATE,
   ADDSUBCATEGORY,
   DELETECATEGORY,
+  UPDATE_USER_STATUS,
 };

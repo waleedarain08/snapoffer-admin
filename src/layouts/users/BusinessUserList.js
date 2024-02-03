@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 // @mui material components
 import Card from "@mui/material/Card";
-
+import Switch from '@mui/material/Switch';
 // Soft UI Dashboard React components
 import SuiBox from "components/SuiBox";
 import SuiTypography from "components/SuiTypography";
@@ -22,8 +22,10 @@ import dummy from "assets/images/dummy.png";
 import moment from "moment";
 
 import { useQuery } from "@apollo/client";
+import { useMutation } from "@apollo/client";
 import * as utils from "../../graphql/queries";
 import { UserType } from '../../constants';
+import * as mutation from "../../graphql/mutation";
 
 function Author({ image, name, email, rowData }) {
   const navigate = useNavigate();
@@ -55,7 +57,6 @@ function Author({ image, name, email, rowData }) {
 }
 
 function Function({ city, country }) {
-  console.log(country);
   return (
     <SuiBox display="flex" flexDirection="column">
       <SuiTypography variant="caption" fontWeight="medium" color="text">
@@ -68,6 +69,23 @@ function Function({ city, country }) {
   );
 }
 
+function ActiveInactive({ id, status, updateStatus }) {
+
+  const handleOnChange = (e) => {
+    const value = e.target.checked;
+    const payload = { variables: { userId: id, status: value } };
+    updateStatus(payload);
+  }
+
+  return (
+    <Switch 
+      inputProps={{ 'aria-label': 'Active Inative User' }} 
+      checked={status}
+      onChange={handleOnChange} 
+    />
+  )
+}
+
 // const checked = () => {
 //   alert("asd");
 // };
@@ -76,7 +94,7 @@ export default function BusinessUserList() {
   //   const { columns, rows } = usersTableData;
   const [searchField, setSearchField] = useState("");
   // const [followsMe, setFollowsMe] = useState(true);
-  const { data } = useQuery(utils?.default?.GETUSERSWHERE, {
+  const { data: queryData } = useQuery(utils?.default?.GETUSERSWHERE, {
     variables: {
       where: {
         type: UserType.Business
@@ -84,11 +102,13 @@ export default function BusinessUserList() {
     }
   });
 
+  const [ updateUserStatus ] = useMutation(mutation?.default?.UPDATE_USER_STATUS);
+
   const handleChange = (e) => {
     setSearchField(e.target.value);
   };
 
-  const filteredPersons = data?.getAllUsers?.data?.filter(
+  const filteredPersons = queryData?.getAllUsers?.data?.filter(
     (row) =>
       row.firstName?.toLowerCase()?.includes(searchField?.toLowerCase()) ||
       row.lastName?.toLowerCase()?.includes(searchField?.toLowerCase())
@@ -100,6 +120,7 @@ export default function BusinessUserList() {
     { name: "PhoneNumber", align: "center" },
     { name: "Created", align: "center" },
     { name: "Type", align: "center" },
+    { name: "Active", align: "center" },
   ];
 
   const rows = filteredPersons?.map((row) => ({
@@ -124,6 +145,7 @@ export default function BusinessUserList() {
         {row.type}
       </SuiTypography>
     ),
+    Active: <ActiveInactive {...row} updateStatus={updateUserStatus} />
   }));
 
   return (
