@@ -5,6 +5,9 @@ import Tables from "layouts/tables";
 import Category from "layouts/categorys";
 import AddCategory from "layouts/categorys/addCategory";
 import EditCategory from "layouts/categorys/editCategory";
+import Packages from 'layouts/packages';
+import AddPackage from 'layouts/packages/add-package';
+
 // import VirtualReality from "layouts/virtual-reality";
 // import RTL from "layouts/rtl";
 import Profile from "layouts/profile";
@@ -67,6 +70,26 @@ const routes = [
     component: <CustomerUserList />,
     noCollapse: true,
     isSideBarActive: true,
+  },
+  {
+    type: "collapse",
+    name: "Packages",
+    key: "packages",
+    route: "/packages",
+    icon: <CustomerSupport size="12px" />,
+    component: <Packages />,
+    noCollapse: true,
+    isSideBarActive: true,
+  },
+  {
+    type: "collapse",
+    name: "Add Package",
+    key: "add-package",
+    route: "/packages/add",
+    icon: <CustomerSupport size="12px" />,
+    component: <AddPackage />,
+    noCollapse: true,
+    isSideBarActive: false,
   },
   // {
   //   type: "collapse",

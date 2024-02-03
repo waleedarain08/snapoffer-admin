@@ -85,9 +85,32 @@ const GETSUBALLCATEGORIES = gql`
   }
 `;
 
+const GET_ALL_PACKAGES = gql`
+  query GetAllPackages {
+    getAllPackages {
+      status
+      message
+      error
+      data {
+        id
+        name
+        photos
+        video
+        story
+        status
+        duration
+        price
+        created_at
+        updated_at
+      }
+    }
+  }
+`
+
 export default {
   GETALLUSERS,
   GETALLCATEGORIES,
   GETSUBALLCATEGORIES,
   GETUSERSWHERE,
+  GET_ALL_PACKAGES,
 };

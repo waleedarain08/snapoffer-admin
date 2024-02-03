@@ -48,7 +48,55 @@ const UPDATE_USER_STATUS = gql`
       }
     }
   }
-`
+`;
+
+const DELETE_PACKAGE = gql`
+  mutation DeletePackage($packageId: Int!) {
+    deletePackage(id: $packageId) {
+      status
+      message
+      error
+    }
+  }
+`;
+
+const ADD_PACKAGE = gql`
+mutation AddNewPackage(
+    $name: String, 
+    $price: String, 
+    $photos: Int, 
+    $status: Int, 
+    $duration: Int, 
+    $story: Int, 
+    $video: Int
+  ) {
+  addNewPackage(
+    name: $name, 
+    price: $price, 
+    photos: $photos, 
+    status: $status, 
+    duration: $duration, 
+    story: $story, 
+    video: $video
+  ) {
+    status
+    message
+    error
+    data {
+      id
+      name
+      photos
+      video
+      story
+      status
+      duration
+      price
+      created_at
+      updated_at
+    }
+  }
+}
+`;
 
 export default {
   ADDCATEGORY,
@@ -56,4 +104,6 @@ export default {
   ADDSUBCATEGORY,
   DELETECATEGORY,
   UPDATE_USER_STATUS,
+  ADD_PACKAGE,
+  DELETE_PACKAGE,
 };
