@@ -157,7 +157,7 @@ export default function Category() {
         <SuiBox mb={3}>
           <Card>
             <SuiBox display="flex" justifyContent="space-between" alignItems="center" p={3}>
-              <SuiTypography variant="h6">All Categories</SuiTypography>
+              <SuiTypography variant="h6">Categories</SuiTypography>
               <SuiButton
                 onClick={() => {
                   navigate("/AddCategory");

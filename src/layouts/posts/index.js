@@ -14,9 +14,55 @@ import { useQuery, useMutation } from "@apollo/client";
 import { useToasts } from "react-toast-notifications";
 import * as utils from "../../graphql/queries";
 import * as mutation from "../../graphql/mutation";
+import { UserType } from '../../constants';
+import DummyImage from "assets/images/dummy.png";
+
 import moment from "moment";
 
 function Author({ image, name, email, rowData }) {
+  const navigate = useNavigate();
+
+  const handleOnClick = (user) => {
+    let path = null;
+    if (user.type === UserType.Business) {
+      path = '/business-users';
+    }
+    
+    if (user.type === UserType.Customer) {
+      path = '/customer-users';
+    }
+
+    /* append search params */
+    path = path + `?email=${user.email}`;
+
+    navigate(path, { state: { data: user } });
+  };
+
+  return (
+    <SuiBox
+      display="flex"
+      alignItems="center"
+      px={1}
+      py={0.5}
+      onClick={() => handleOnClick(rowData.user)}
+      style={{ cursor: "pointer" }}
+    >
+      <SuiBox mr={2}>
+        <SuiAvatar src={image} alt={name} size="sm" variant="rounded" />
+      </SuiBox>
+      <SuiBox display="flex" flexDirection="column" >
+        <SuiTypography variant="button" fontWeight="medium">
+          {name}
+        </SuiTypography>
+        <SuiTypography variant="caption" color="secondary">
+          {email}
+        </SuiTypography>
+      </SuiBox>
+    </SuiBox>
+  );
+}
+
+function Title({ image, name, email, rowData }) {
   const navigate = useNavigate();
 
   const handleOnClick = (post) => {
@@ -64,6 +110,11 @@ function ApproveDisapprove({ id, approved, onApproveDisapprove }) {
   )
 }
 
+const getFullName = (user) => {
+  if (!user) return "Na";
+  return `${user.firstName} ${user.lastName}`.trim();
+}
+
 
 export default function Posts() {
   const navigate = useNavigate();
@@ -88,16 +139,25 @@ export default function Posts() {
 
   const columns = [
     { name: "Title", align: "left" },
-    { name: "Price", align: "center" },
-    { name: "Discount", align: "center" },
-    { name: "Expiary", align: "center" },
-    { name: "Created", align: "center" },
+    { name: "User", align: "left" },
+    { name: "Price", align: "left" },
+    { name: "Discount", align: "left" },
+    { name: "Expiary", align: "left" },
+    { name: "Created", align: "left" },
     { name: "Approved", align: "center" },
   ];
 
   const rows = filteredPersons?.map((row) => ({
     Title: (
-      <Author image={`${Dot}`} name={`${row.title !== null ? row.title : ""}`} rowData={row} />
+      <Title image={`${Dot}`} name={`${row.title !== null ? row.title : ""}`} rowData={row} />
+    ),
+    User: (
+      <Author 
+        image={row?.user?.avatar || DummyImage} 
+        name={getFullName(row.user)} 
+        email={row?.user?.email || 'Na'}
+        rowData={row} 
+      />
     ),
     Price: (
       <SuiTypography variant="caption" color="secondary" fontWeight="medium">
@@ -130,7 +190,7 @@ export default function Posts() {
         <SuiBox mb={3}>
           <Card>
             <SuiBox display="flex" justifyContent="space-between" alignItems="center" p={3}>
-              <SuiTypography variant="h6">All Posts</SuiTypography>
+              <SuiTypography variant="h6">Posts</SuiTypography>
             </SuiBox>
             <SuiBox
               sx={{

@@ -102,7 +102,7 @@ export default function Packages() {
       <SuiBox mb={3}>
         <Card>
           <SuiBox display="flex" justifyContent="space-between" alignItems="center" p={3}>
-            <SuiTypography variant="h6">All Packages</SuiTypography>
+            <SuiTypography variant="h6">Packages</SuiTypography>
             <SuiButton
               onClick={() => {
                 navigate("/packages/add");

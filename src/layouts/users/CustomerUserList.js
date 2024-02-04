@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { useNavigate, useSearchParams } from "react-router-dom";
 // @mui material components
 import Card from "@mui/material/Card";
 import Switch from '@mui/material/Switch';
@@ -95,20 +95,31 @@ function ActiveInactive({ id, status, updateStatus }) {
 export default function BusinessUserList() {
   //   const { columns, rows } = usersTableData;
   const [searchField, setSearchField] = useState("");
+  const [ searchParams ] = useSearchParams();
+
   // const [followsMe, setFollowsMe] = useState(true);
-  const { data: queryData } = useQuery(utils?.default?.GETUSERSWHERE, {
-    variables: {
-      where: {
-        type: UserType.Customer
-      }
-    }
-  });
+  const { data: queryData, refetch } = useQuery(utils?.default?.GETUSERSWHERE);
 
   const [ updateUserStatus ] = useMutation(mutation?.default?.UPDATE_USER_STATUS);
 
   const handleChange = (e) => {
     setSearchField(e.target.value);
   };
+
+  useEffect(() => {
+    const email = searchParams.get('email');
+    const payload = {
+      where: {
+        type: UserType.Customer
+      }
+    }
+    /* if email exists in the url */
+    if (email) {
+      /* append email in the query payload */
+      payload.where['email'] = email;
+    }
+    refetch(payload);
+  }, []);
 
   const filteredPersons = queryData?.getAllUsers?.data?.filter(
     (row) =>

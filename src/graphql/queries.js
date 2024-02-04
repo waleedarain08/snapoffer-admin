@@ -127,6 +127,14 @@ query GetAllPosts($pagination: PaginationInput) {
       createdAt
       updatedAt
       approved
+      user {
+        id
+        firstName
+        lastName
+        email
+        avatar
+        type
+      }
     }
   }
 }
