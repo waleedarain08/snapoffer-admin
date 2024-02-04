@@ -130,6 +130,30 @@ mutation ApproveDisapprovePost($postId: Int!, $approved: Boolean!) {
 }
 `;
 
+const DELETE_BOOKING = gql`
+mutation DeleteBooking($bookingId: Int!) {
+  deleteBooking(bookingId: $bookingId) {
+    status
+    message
+    error
+    data {
+      id
+      postId
+      userId
+      businessId
+      email
+      firstName
+      lastName
+      phoneNumber
+      country
+      city
+      code
+      redeem
+    }
+  }
+}
+`
+
 export default {
   ADDCATEGORY,
   ADDUPDATE,
@@ -139,4 +163,5 @@ export default {
   ADD_PACKAGE,
   DELETE_PACKAGE,
   APPROVE_DISAPPROVE_POST,
+  DELETE_BOOKING,
 };

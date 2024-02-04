@@ -172,6 +172,35 @@ query GetPostDetail($postId: Int) {
 }
 `
 
+const GET_BOOKINGS = gql`
+query GetBookings {
+  getBooking {
+    status
+    message
+    data {
+      id
+      postId
+      userId
+      businessId
+      email
+      firstName
+      lastName
+      phoneNumber
+      country
+      city
+      code
+      redeem
+    }
+    pagination {
+      total
+      currentPage
+      perPage
+    }
+    error
+  }
+}
+`
+
 export default {
   GETALLUSERS,
   GETALLCATEGORIES,
@@ -180,4 +209,5 @@ export default {
   GET_ALL_PACKAGES,
   GET_ALL_POSTS,
   GET_POST_DETAIL,
+  GET_BOOKINGS,
 };

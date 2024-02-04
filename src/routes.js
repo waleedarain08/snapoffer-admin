@@ -11,6 +11,8 @@ import AddPackage from 'layouts/packages/add-package';
 import Posts from 'layouts/posts';
 import PostDetail from 'layouts/posts/post-detail';
 
+import Bookings from 'layouts/bookings';
+
 // import VirtualReality from "layouts/virtual-reality";
 // import RTL from "layouts/rtl";
 import Profile from "layouts/profile";
@@ -51,6 +53,16 @@ const routes = [
     route: "/tables",
     icon: <Office size="12px" />,
     component: <Tables />,
+    noCollapse: true,
+    isSideBarActive: true,
+  },
+  {
+    type: "collapse",
+    name: "Bookings",
+    key: "bookings",
+    route: "/bookings",
+    icon: <CreditCard size="12px" />,
+    component: <Bookings />,
     noCollapse: true,
     isSideBarActive: true,
   },
