@@ -107,10 +107,69 @@ const GET_ALL_PACKAGES = gql`
   }
 `
 
+const GET_ALL_POSTS = gql`
+query GetAllPosts($pagination: PaginationInput) {
+  getAllPosts(pagination: $pagination) {
+    pagination {
+      total
+      perPage
+      currentPage
+    }
+    error
+    message
+    status
+    data {
+      id
+      title
+      postExpireDate
+      price
+      discount
+      createdAt
+      updatedAt
+      approved
+    }
+  }
+}
+`
+
+const GET_POST_DETAIL = gql`
+query GetPostDetail($postId: Int) {
+  getPostDetail(id: $postId) {
+    status
+    data {
+      id
+      subscriptionId
+      userId
+      title
+      description
+      locationTitle
+      location
+      expireDate
+      postExpireDate
+      price
+      discount
+      socialLink
+      createdAt
+      updatedAt
+      isLike
+      isBookmark
+      isOrder
+      isFollow
+      commentCount
+      approved
+    }
+    message
+    error
+  }
+}
+`
+
 export default {
   GETALLUSERS,
   GETALLCATEGORIES,
   GETSUBALLCATEGORIES,
   GETUSERSWHERE,
   GET_ALL_PACKAGES,
+  GET_ALL_POSTS,
+  GET_POST_DETAIL,
 };

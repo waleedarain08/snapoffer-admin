@@ -98,6 +98,38 @@ mutation AddNewPackage(
 }
 `;
 
+const APPROVE_DISAPPROVE_POST = gql`
+mutation ApproveDisapprovePost($postId: Int!, $approved: Boolean!) {
+  approvePost(postId: $postId, approved: $approved) {
+    status
+    message
+    error
+    data {
+      id
+      subscriptionId
+      userId
+      title
+      description
+      locationTitle
+      location
+      expireDate
+      postExpireDate
+      price
+      discount
+      socialLink
+      createdAt
+      updatedAt
+      isLike
+      isBookmark
+      isOrder
+      isFollow
+      commentCount
+      approved
+    }
+  }
+}
+`;
+
 export default {
   ADDCATEGORY,
   ADDUPDATE,
@@ -106,4 +138,5 @@ export default {
   UPDATE_USER_STATUS,
   ADD_PACKAGE,
   DELETE_PACKAGE,
+  APPROVE_DISAPPROVE_POST,
 };

@@ -8,6 +8,9 @@ import EditCategory from "layouts/categorys/editCategory";
 import Packages from 'layouts/packages';
 import AddPackage from 'layouts/packages/add-package';
 
+import Posts from 'layouts/posts';
+import PostDetail from 'layouts/posts/post-detail';
+
 // import VirtualReality from "layouts/virtual-reality";
 // import RTL from "layouts/rtl";
 import Profile from "layouts/profile";
@@ -80,6 +83,26 @@ const routes = [
     component: <Packages />,
     noCollapse: true,
     isSideBarActive: true,
+  },
+  {
+    type: "collapse",
+    name: "Posts",
+    key: "posts",
+    route: "/posts",
+    icon: <CustomerSupport size="12px" />,
+    component: <Posts />,
+    noCollapse: true,
+    isSideBarActive: true,
+  },
+  {
+    type: "collapse",
+    name: "Post Detail",
+    key: "post-detail",
+    route: "/posts/detail",
+    icon: <CustomerSupport size="12px" />,
+    component: <PostDetail />,
+    noCollapse: true,
+    isSideBarActive: false,
   },
   {
     type: "collapse",
