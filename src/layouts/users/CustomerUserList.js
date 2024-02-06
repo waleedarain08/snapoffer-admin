@@ -148,6 +148,11 @@ export default function BusinessUserList() {
       />
     ),
     City: <Function city={row.city} />,
+    PhoneNumber: (
+      <SuiTypography variant="caption" color="secondary" fontWeight="medium">
+        {row.phoneNumber}
+      </SuiTypography>
+    ),
     Created: (
       <SuiTypography variant="caption" color="secondary" fontWeight="medium">
         {moment(row.createdAt).format("DD/MM/YYYY")}
