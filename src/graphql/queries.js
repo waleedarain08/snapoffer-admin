@@ -124,6 +124,7 @@ query GetAllPosts($pagination: PaginationInput) {
       postExpireDate
       price
       discount
+      reportCount
       createdAt
       updatedAt
       approved
@@ -154,6 +155,7 @@ query GetPostDetail($postId: Int) {
       location
       expireDate
       postExpireDate
+      reportCount
       price
       discount
       socialLink

@@ -142,6 +142,7 @@ export default function Posts() {
     { name: "User", align: "left" },
     { name: "Price", align: "left" },
     { name: "Discount", align: "left" },
+    { name: "Report Count", align: "left" },
     { name: "Expiary", align: "left" },
     { name: "Created", align: "left" },
     { name: "Approved", align: "center" },
@@ -167,6 +168,11 @@ export default function Posts() {
     Discount: (
       <SuiTypography variant="caption" color="secondary" fontWeight="medium">
         {row.discount}
+      </SuiTypography>
+    ),
+    'Report Count': (
+      <SuiTypography variant="caption" color="secondary" fontWeight="medium">
+        {row.reportCount}
       </SuiTypography>
     ),
     Expiary: (
