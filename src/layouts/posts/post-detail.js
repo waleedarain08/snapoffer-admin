@@ -1,25 +1,20 @@
 import React, { useState, useEffect } from 'react';
 import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "examples/Navbars/DashboardNavbar";
-import Card from "@mui/material/Card";
 import SuiBox from "components/SuiBox";
+import Grid from "@mui/material/Grid";
+import ProfileInfoCard from "examples/Cards/InfoCards/ProfileInfoCard";
 import CircularProgress from '@mui/material/CircularProgress';
-import SuiTypography from "components/SuiTypography";
-import SuiButton from "components/SuiButton";
-import Table from "examples/Tables/Table";
-import { useNavigate } from "react-router-dom";
-import { useMutation, useQuery } from "@apollo/client";
-import { useToasts } from "react-toast-notifications";
+import { useQuery } from "@apollo/client";
 import { useSearchParams } from 'react-router-dom';
 import * as utils from "../../graphql/queries";
-import * as mutation from "../../graphql/mutation";
 import moment from "moment";
 
 
 export default function PostDetail() {
   const [searchField, setSearchField] = useState("");
-  const [ searchParams ] = useSearchParams();
-  const { data, refetch, loading } = useQuery(utils.default.GET_POST_DETAIL); 
+  const [searchParams] = useSearchParams();
+  const { data, refetch, loading } = useQuery(utils.default.GET_POST_DETAIL);
 
   useEffect(() => {
 
@@ -40,24 +35,37 @@ export default function PostDetail() {
   return (
     <DashboardLayout>
       <DashboardNavbar onChange={handleChange} />
-      { loading ? <CircularProgress /> 
-      : 
-      <SuiBox py={3}>
-        <SuiBox mb={3}>
-          <SuiTypography>
-            Id: {postData?.id || 'Na'}
-          </SuiTypography>
-          <SuiTypography>
-            Title: {postData?.title || 'Na'}
-          </SuiTypography>
-          <SuiTypography>
-            Description: {postData?.description || 'Na'}
-          </SuiTypography>
-          <SuiTypography>
-            JSON: { postData ? JSON.stringify(postData, null, 2) : 'Na'}
-          </SuiTypography>
+      {loading ? <CircularProgress />
+        :
+        <SuiBox py={3}>
+          <SuiBox mb={3}>
+            <Grid container spacing={3}>
+              <Grid item xs={12} md={6} xl={6}>
+                <ProfileInfoCard
+                  title={'Title: ' + postData?.title || 'Na'}
+                  description={'Description: ' + postData.description || 'Na'}
+                  info={{
+                    'Location Title': postData?.locationTitle || 'Na',
+                    'Location': postData?.location || 'Na',
+                    'Expire Date': postData.expireDate ? moment(postData.expireDate).format("MM/DD/YYYY hh:mm:A") + ' - ' + moment(postData.expireDate).fromNow() : 'Na',
+                    'Post Expire Date': postData.postExpireDate ? moment(postData.postExpireDate).format("MM/DD/YYYY hh:mm:A") + ' - ' + moment(postData.postExpireDate).fromNow() : 'Na',
+                    'Price': postData?.price || 'Na',
+                    'Discount': postData?.discount || 'Na',
+                    'Report Count': postData?.reportCount || 'Na',
+
+                    'Comment Count': postData?.commentCount || 'Na',
+                    'Approved': postData?.approved ? 'Yes' : 'No',
+
+                    'Created At': postData.createdAt ? moment(postData.createdAt).format("MM/DD/YYYY hh:mm:A") + ' - ' + moment(postData.createdAt).fromNow() : 'Na',
+                    'Updated At': postData.updatedAt ? moment(postData.updatedAt).format("MM/DD/YYYY hh:mm:A") + ' - ' + moment(postData.updatedAt).fromNow() : 'Na',
+                  }}
+                  social={[]}
+                  action={{ route: "", tooltip: "Edit Profile" }}
+                />
+              </Grid>
+            </Grid>
+          </SuiBox>
         </SuiBox>
-      </SuiBox>      
       }
 
 
