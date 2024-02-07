@@ -203,6 +203,17 @@ query GetBookings {
 }
 `
 
+const GET_DASHBOARD_DATA = gql`
+query GetDashboardData {
+  countCustomerUsers { data}
+  getBusinessCount { data }
+  getBookingsCount { data }
+  getPostsCount { data }
+  getLikesCount { data }
+  getCommentsCount { data }
+}
+`;
+
 export default {
   GETALLUSERS,
   GETALLCATEGORIES,
@@ -212,4 +223,5 @@ export default {
   GET_ALL_POSTS,
   GET_POST_DETAIL,
   GET_BOOKINGS,
+  GET_DASHBOARD_DATA,
 };

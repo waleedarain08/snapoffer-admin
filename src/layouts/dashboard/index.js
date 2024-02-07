@@ -16,6 +16,7 @@ import GradientLineChart from "examples/Charts/LineCharts/GradientLineChart";
 
 // Soft UI Dashboard React base styles
 import typography from "assets/theme/base/typography";
+import * as utils from "../../graphql/queries";
 
 // Dashboard layout components
 // import BuildByDevelopers from "layouts/dashboard/components/BuildByDevelopers";
@@ -26,10 +27,25 @@ import OrderOverview from "layouts/dashboard/components/OrderOverview";
 // Data
 import reportsBarChartData from "layouts/dashboard/data/reportsBarChartData";
 import gradientLineChartData from "layouts/dashboard/data/gradientLineChartData";
+import { useQuery } from "@apollo/client";
+import { useEffect } from "react";
 
 function Dashboard() {
   const { size } = typography;
   const { chart, items } = reportsBarChartData;
+
+  const { data, refetch } = useQuery(utils?.default?.GET_DASHBOARD_DATA);
+
+  useEffect(() => {
+    refetch();
+  }, []);
+
+  const businessCount = data?.getBusinessCount?.data ?? 0;
+  const customersCount = data?.countCustomerUsers?.data ?? 0;
+  const postsCount = data?.getPostsCount?.data ?? 0;
+  const bookingsCount = data?.getBookingsCount?.data ?? 0;
+  const commentsCount = data?.getCommentsCount?.data ?? 0;
+  const likesCount = data?.getLikesCount?.data ?? 0;
 
   return (
     <DashboardLayout>
@@ -40,7 +56,7 @@ function Dashboard() {
             <Grid item xs={12} sm={6} xl={3}>
               <MiniStatisticsCard
                 title={{ text: "Businesses" }}
-                count="30"
+                count={businessCount}
                 // percentage={{ color: "success", text: "+55%" }}
                 icon={{ color: "info", component: "paid" }}
               />
@@ -48,7 +64,7 @@ function Dashboard() {
             <Grid item xs={12} sm={6} xl={3}>
               <MiniStatisticsCard
                 title={{ text: "Customers" }}
-                count="2,300"
+                count={customersCount}
                 // percentage={{ color: "success", text: "+3%" }}
                 icon={{ color: "info", component: "public" }}
               />
@@ -56,20 +72,33 @@ function Dashboard() {
             <Grid item xs={12} sm={6} xl={3}>
               <MiniStatisticsCard
                 title={{ text: "Posts" }}
-                count="400"
+                count={postsCount}
                 // percentage={{ color: "error", text: "-2%" }}
                 icon={{ color: "info", component: "emoji_events" }}
               />
             </Grid>
             <Grid item xs={12} sm={6} xl={3}>
               <MiniStatisticsCard
+                title={{ text: "Bookings" }}
+                count={bookingsCount}
+                // percentage={{ color: "success", text: "+55%" }}
+                icon={{ color: "info", component: "paid" }}
+              />
+            </Grid>
+            <Grid item xs={12} sm={6} xl={3}>
+              <MiniStatisticsCard
+                title={{ text: "Comments" }}
+                count={commentsCount}
+                // percentage={{ color: "success", text: "+55%" }}
+                icon={{ color: "info", component: "paid" }}
+              />
+            </Grid>
+            <Grid item xs={12} sm={6} xl={3}>
+              <MiniStatisticsCard
                 title={{ text: "Likes" }}
-                count="30"
-                // percentage={{ color: "success", text: "+5%" }}
-                icon={{
-                  color: "info",
-                  component: "shopping_cart",
-                }}
+                count={likesCount}
+                // percentage={{ color: "success", text: "+55%" }}
+                icon={{ color: "info", component: "paid" }}
               />
             </Grid>
           </Grid>
