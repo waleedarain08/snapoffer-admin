@@ -31,7 +31,7 @@ import { UserType } from '../../constants';
 function Author({ image, name, email, rowData }) {
   const navigate = useNavigate();
   const moveit = (alldata) => {
-    navigate("/userDetails", { state: { data: alldata } });
+    navigate("/user-details", { state: { data: alldata } });
   };
   return (
     <SuiBox

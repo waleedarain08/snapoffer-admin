@@ -69,8 +69,8 @@ export default function Packages() {
       </SuiTypography>
     ),
     Price: (
-      <SuiTypography variant="caption" color="secondary" fontWeight="medium">
-      { row.price }
+    <SuiTypography variant="caption" color="secondary" fontWeight="medium">
+      { "$" + row.price }
     </SuiTypography>
     ),
     Created: (

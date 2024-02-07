@@ -23,19 +23,7 @@ function Author({ image, name, email, rowData }) {
   const navigate = useNavigate();
 
   const handleOnClick = (user) => {
-    let path = null;
-    if (user.type === UserType.Business) {
-      path = '/business-users';
-    }
-    
-    if (user.type === UserType.Customer) {
-      path = '/customer-users';
-    }
-
-    /* append search params */
-    path = path + `?email=${user.email}`;
-
-    navigate(path, { state: { data: user } });
+    navigate('/user-details', { state: { data: user } });
   };
 
   return (
@@ -62,11 +50,11 @@ function Author({ image, name, email, rowData }) {
   );
 }
 
-function Title({ image, name, email, rowData }) {
+function Title({ title, description, rowData }) {
   const navigate = useNavigate();
 
   const handleOnClick = (post) => {
-    navigate(`/posts/detail?id=${post.id}`, { state: { data: post } });
+    navigate(`/posts/detail`, { state: { data: post } });
   };
 
   return (
@@ -78,15 +66,12 @@ function Title({ image, name, email, rowData }) {
       onClick={() => handleOnClick(rowData)}
       style={{ cursor: "pointer" }}
     >
-      <SuiBox mr={2}>
-        <SuiAvatar src={image} alt={name} size="sm" variant="rounded" />
-      </SuiBox>
       <SuiBox display="flex" flexDirection="column">
         <SuiTypography variant="button" fontWeight="medium">
-          {name}
+          {title}
         </SuiTypography>
         <SuiTypography variant="caption" color="secondary">
-          {email}
+          {description}
         </SuiTypography>
       </SuiBox>
     </SuiBox>
@@ -138,8 +123,8 @@ export default function Posts() {
   );
 
   const columns = [
-    { name: "Title", align: "left" },
     { name: "User", align: "left" },
+    { name: "Title", align: "left" },
     { name: "Price", align: "left" },
     { name: "Discount", align: "left" },
     { name: "Report Count", align: "left" },
@@ -150,7 +135,11 @@ export default function Posts() {
 
   const rows = filteredPersons?.map((row) => ({
     Title: (
-      <Title image={`${Dot}`} name={`${row.title !== null ? row.title : ""}`} rowData={row} />
+      <Title 
+        title={`${row.title !== null ? row.title : ""}`} 
+        description=""
+        rowData={row} 
+      />
     ),
     User: (
       <Author 

@@ -6,19 +6,18 @@ import Grid from "@mui/material/Grid";
 import ProfileInfoCard from "examples/Cards/InfoCards/ProfileInfoCard";
 import CircularProgress from '@mui/material/CircularProgress';
 import { useQuery } from "@apollo/client";
-import { useSearchParams } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import * as utils from "../../graphql/queries";
 import moment from "moment";
 
 
 export default function PostDetail() {
   const [searchField, setSearchField] = useState("");
-  const [searchParams] = useSearchParams();
+  const location = useLocation();
   const { data, refetch, loading } = useQuery(utils.default.GET_POST_DETAIL);
 
   useEffect(() => {
-
-    const postId = searchParams.get('id');
+    const postId = location?.state?.data?.id;
     if (postId) {
       refetch({ postId: parseInt(postId, 10) });
     }
@@ -40,7 +39,7 @@ export default function PostDetail() {
         <SuiBox py={3}>
           <SuiBox mb={3}>
             <Grid container spacing={3}>
-              <Grid item xs={12} md={6} xl={6}>
+              <Grid item xs={12} md={12} xl={12}>
                 <ProfileInfoCard
                   title={'Title: ' + postData?.title || 'Na'}
                   description={'Description: ' + postData.description || 'Na'}

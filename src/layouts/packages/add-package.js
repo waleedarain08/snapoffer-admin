@@ -33,7 +33,7 @@ export default function AddPackage() {
     const payload = { 
       variables: {
         name: packageName,
-        price: "$" + packagePrice,
+        price: packagePrice,
         photos: 1,
         status: 1,
         duration: 1,

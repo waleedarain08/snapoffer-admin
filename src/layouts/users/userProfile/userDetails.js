@@ -53,7 +53,7 @@ function userDetails() {
             {/* <Grid item xs={12} md={6} xl={4}>
                 <PlatformSettings />
               </Grid> */}
-            <Grid item xs={12} md={6} xl={6}>
+            <Grid item xs={12} md={12} xl={12}>
               <ProfileInfoCard
                 title="profile information"
                 // description="Hi, I’m Alec Thompson, Decisions: If you can’t decide, the answer is no. If two equally difficult paths, choose the one more painful in the short term (pain avoidance is creating an illusion of equality)."
@@ -124,9 +124,9 @@ function userDetails() {
                 action={{ route: "", tooltip: "Edit Profile" }}
               />
             </Grid>
-            <Grid item xs={12} xl={6}>
+            {/* <Grid item xs={12} xl={6}>
               <ProfilesList title="conversations" profiles={profilesListData} />
-            </Grid>
+            </Grid> */}
           </Grid>
         </SuiBox>
       )}
