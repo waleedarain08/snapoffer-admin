@@ -85,7 +85,7 @@ function Dashboard() {
                 icon={{ color: "info", component: "paid" }}
               />
             </Grid>
-            <Grid item xs={12} sm={6} xl={3}>
+            {/* <Grid item xs={12} sm={6} xl={3}>
               <MiniStatisticsCard
                 title={{ text: "Comments" }}
                 count={commentsCount}
@@ -100,7 +100,7 @@ function Dashboard() {
                 // percentage={{ color: "success", text: "+55%" }}
                 icon={{ color: "info", component: "paid" }}
               />
-            </Grid>
+            </Grid> */}
           </Grid>
         </SuiBox>
         <SuiBox mb={3}>
@@ -127,7 +127,7 @@ function Dashboard() {
                 items={items}
               />
             </Grid> */}
-            <Grid item xs={12} lg={12}>
+            {/* <Grid item xs={12} lg={12}>
               <GradientLineChart
                 title="Users Overview"
                 // description={
@@ -146,7 +146,7 @@ function Dashboard() {
                 height="30.25rem"
                 chart={gradientLineChartData}
               />
-            </Grid>
+            </Grid> */}
           </Grid>
         </SuiBox>
         <Grid container spacing={3}>
