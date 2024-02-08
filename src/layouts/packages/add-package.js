@@ -22,6 +22,10 @@ export default function AddPackage() {
   const [searchField, setSearchField] = useState("");
   const [packageName, setPackageName] = useState("");
   const [packagePrice, setPackagePrice] = useState("");
+  const [photos, setPhoto] = useState(0);
+  const [video, setVideo] = useState(0);
+  const [story, setStory] = useState(0);
+  const [duration, setDuration] = useState(0);
 
   const [addPackage, { data }] = useMutation(mutation?.default?.ADD_PACKAGE);
 
@@ -30,15 +34,15 @@ export default function AddPackage() {
   };
 
   const handleAddPackage = () => {
-    const payload = { 
+    const payload = {
       variables: {
         name: packageName,
         price: packagePrice,
-        photos: 1,
+        photos: parseInt(photos, 10),
+        video: parseInt(video, 10),
+        story: parseInt(story, 10),
+        duration: parseInt(duration, 10),
         status: 1,
-        duration: 1,
-        story: 1,
-        video: 1
       }
     };
     addPackage(payload);
@@ -65,44 +69,116 @@ export default function AddPackage() {
                 <SuiTypography variant="h6" fontWeight="medium">
                   Add New Package
                 </SuiTypography>
-                <SuiBox mt={2} mb={2}>
-                  <SuiBox mb={2}>
-                    <SuiBox mb={2} ml={0.5}>
-                      <SuiTypography component="label" variant="caption" fontWeight="bold">
-                        Package Name
-                      </SuiTypography>
+                <Grid container columnSpacing={2} >
+                  <Grid item xs={12} md={12} lg={12}>
+                    <SuiBox mt={2} mb={2}>
+                      <SuiBox mb={2}>
+                        <SuiBox mb={2} ml={0.5}>
+                          <SuiTypography component="label" variant="caption" fontWeight="bold">
+                            Package Name
+                          </SuiTypography>
+                        </SuiBox>
+                        <SuiInput
+                          onChange={(e) => setPackageName(e.target.value)}
+                          type="text"
+                          placeholder="Package Name"
+                        />
+                      </SuiBox>
                     </SuiBox>
-                    <SuiInput
-                      onChange={(e) => setPackageName(e.target.value)}
-                      type="text"
-                      placeholder="Package Name"
-                    />
-                  </SuiBox>
-                </SuiBox>
-                <SuiBox mt={2} mb={2}>
-                  <SuiBox mb={2}>
-                    <SuiBox mb={2} ml={0.5}>
-                      <SuiTypography component="label" variant="caption" fontWeight="bold">
-                        Package Price
-                      </SuiTypography>
+                  </Grid>
+                  <Grid item xs={12} md={12} lg={12}>
+                    <SuiBox mt={2} mb={2}>
+                      <SuiBox mb={2}>
+                        <SuiBox mb={2} ml={0.5}>
+                          <SuiTypography component="label" variant="caption" fontWeight="bold">
+                            Package Price
+                          </SuiTypography>
+                        </SuiBox>
+                        <SuiInput
+                          onChange={(e) => setPackagePrice(e.target.value)}
+                          type="text"
+                          placeholder="Package Price"
+                        />
+                      </SuiBox>
                     </SuiBox>
-                    <SuiInput
-                      onChange={(e) => setPackagePrice(e.target.value)}
-                      type="text"
-                      placeholder="Package Price"
-                    />
-                  </SuiBox>
-                </SuiBox>
-                <SuiBox mt={4} mb={5}>
-                  <SuiButton
-                    onClick={handleAddPackage}
-                    variant="gradient"
-                    color="info"
-                    fullWidth
-                  >
-                    Add Package
-                  </SuiButton>
-                </SuiBox>
+                  </Grid>
+                  <Grid item xs={12} md={6} lg={6}>
+                    <SuiBox mt={2} mb={2}>
+                      <SuiBox mb={2}>
+                        <SuiBox mb={2} ml={0.5}>
+                          <SuiTypography component="label" variant="caption" fontWeight="bold">
+                            Photos
+                          </SuiTypography>
+                        </SuiBox>
+                        <SuiInput
+                          onChange={(e) => setPhoto(e.target.value)}
+                          type="number"
+                          placeholder="Photos"
+                        />
+                      </SuiBox>
+                    </SuiBox>
+                  </Grid>
+                  <Grid item xs={12} md={6} lg={6}>
+                    <SuiBox mt={2} mb={2}>
+                      <SuiBox mb={2}>
+                        <SuiBox mb={2} ml={0.5}>
+                          <SuiTypography component="label" variant="caption" fontWeight="bold">
+                            Video
+                          </SuiTypography>
+                        </SuiBox>
+                        <SuiInput
+                          onChange={(e) => setVideo(e.target.value)}
+                          type="number"
+                          placeholder="Video"
+                        />
+                      </SuiBox>
+                    </SuiBox>
+                  </Grid>
+                  <Grid item xs={12} md={6} lg={6}>
+                    <SuiBox mt={2} mb={2}>
+                      <SuiBox mb={2}>
+                        <SuiBox mb={2} ml={0.5}>
+                          <SuiTypography component="label" variant="caption" fontWeight="bold">
+                            Story
+                          </SuiTypography>
+                        </SuiBox>
+                        <SuiInput
+                          onChange={(e) => setStory(e.target.value)}
+                          type="number"
+                          placeholder="Story"
+                        />
+                      </SuiBox>
+                    </SuiBox>
+                  </Grid>
+                  <Grid item xs={12} md={6} lg={6}>
+                    <SuiBox mt={2} mb={2}>
+                      <SuiBox mb={2}>
+                        <SuiBox mb={2} ml={0.5}>
+                          <SuiTypography component="label" variant="caption" fontWeight="bold">
+                            Duration
+                          </SuiTypography>
+                        </SuiBox>
+                        <SuiInput
+                          onChange={(e) => setDuration(e.target.value)}
+                          type="number"
+                          placeholder="Duration"
+                        />
+                      </SuiBox>
+                    </SuiBox>
+                  </Grid>
+                  <Grid item xs={12} md={12} lg={12}>
+                    <SuiBox mt={4} mb={5}>
+                      <SuiButton
+                        onClick={handleAddPackage}
+                        variant="gradient"
+                        color="info"
+                        fullWidth
+                      >
+                        Add Package
+                      </SuiButton>
+                    </SuiBox>
+                  </Grid>
+                </Grid>
               </SuiBox>
             </Card>
           </Grid>
