@@ -147,8 +147,13 @@ query GetPostDetail($postId: Int) {
     status
     data {
       id
+      user {
+        id
+        firstName
+        lastName
+        avatar
+      }
       subscriptionId
-      userId
       title
       description
       locationTitle
@@ -167,6 +172,31 @@ query GetPostDetail($postId: Int) {
       isFollow
       commentCount
       approved
+      comments {
+        id
+        comment
+        createdAt
+        user {
+          id
+          firstName
+          avatar
+          lastName
+        }
+      }
+      tags {
+        id
+        tag {
+          id
+          title
+          createdAt
+        }
+      }
+      media {
+        id
+        asset
+        type
+        createdAt
+      }
     }
     message
     error

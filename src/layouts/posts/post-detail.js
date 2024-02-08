@@ -5,10 +5,17 @@ import SuiBox from "components/SuiBox";
 import Grid from "@mui/material/Grid";
 import ProfileInfoCard from "examples/Cards/InfoCards/ProfileInfoCard";
 import CircularProgress from '@mui/material/CircularProgress';
+import SuiTypography from "components/SuiTypography";
+import Card from "@mui/material/Card";
+import Divider from "@mui/material/Divider";
+
+
 import { useQuery } from "@apollo/client";
 import { useLocation } from 'react-router-dom';
 import * as utils from "../../graphql/queries";
 import moment from "moment";
+import Comments from './comment';
+import Tags from './tags';
 
 
 export default function PostDetail() {
@@ -54,13 +61,28 @@ export default function PostDetail() {
 
                     'Comment Count': postData?.commentCount || 'Na',
                     'Approved': postData?.approved ? 'Yes' : 'No',
-
+                    'Tags': <Tags tags={postData?.tags || []} />,
                     'Created At': postData.createdAt ? moment(postData.createdAt).format("MM/DD/YYYY hh:mm:A") + ' - ' + moment(postData.createdAt).fromNow() : 'Na',
                     'Updated At': postData.updatedAt ? moment(postData.updatedAt).format("MM/DD/YYYY hh:mm:A") + ' - ' + moment(postData.updatedAt).fromNow() : 'Na',
                   }}
                   social={[]}
                   action={{ route: "", tooltip: "Edit Profile" }}
                 />
+              </Grid>
+              <Grid item xs={12} md={12} xl={12}>
+                <Card>
+                  <SuiBox pb={2} px={2} lineHeight={1.25}>
+                    <SuiTypography mt={2} variant="h5" fontWeight="medium" textTransform="capitalize">
+                      Comments
+                    </SuiTypography>
+
+                    <Divider />
+
+                    <Comments comments={postData?.comments || []} />
+
+
+                  </SuiBox>
+                </Card>
               </Grid>
             </Grid>
           </SuiBox>
