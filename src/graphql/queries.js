@@ -239,8 +239,6 @@ query GetDashboardData {
   getBusinessCount { data }
   getBookingsCount { data }
   getPostsCount { data }
-  getLikesCount { data }
-  getCommentsCount { data }
 }
 `;
 
