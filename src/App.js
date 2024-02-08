@@ -139,7 +139,7 @@ export default function App() {
               <Sidenav
                 color={sidenavColor}
                 brand={brand}
-                brandName="Admin Dashboard"
+                brandName="Snap Offers Admin"
                 routes={fildtedRoutes}
                 onMouseEnter={handleOnMouseEnter}
                 onMouseLeave={handleOnMouseLeave}

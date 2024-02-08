@@ -91,7 +91,8 @@ export default function allUsers() {
     { name: "FullName", align: "left" },
     { name: "City", align: "left" },
     { name: "PhoneNumber", align: "center" },
-    { name: "Created", align: "center" },
+    { name: "DOB", align: "center" },
+    { name: "CreatedAt", align: "center" },
     { name: "Type", align: "center" },
   ];
 
@@ -107,13 +108,19 @@ export default function allUsers() {
       />
     ),
     City: <Function city={row.city} />,
-    Created: (
+    PhoneNumber: <Function city={row.phoneNumber} />,
+    DOB: (
+      <SuiTypography variant="caption" color="secondary" fontWeight="medium">
+        {row.dob==null?"N/A":moment(row.dob).format("DD/MM/YYYY")}
+      </SuiTypography>
+    ),
+    CreatedAt: (
       <SuiTypography variant="caption" color="secondary" fontWeight="medium">
         {moment(row.createdAt).format("DD/MM/YYYY")}
       </SuiTypography>
     ),
     Type: (
-      <SuiTypography variant="caption" color="secondary" fontWeight="medium">
+      <SuiTypography variant="caption" color="primary" fontWeight="large">
         {row.type}
       </SuiTypography>
     ),
