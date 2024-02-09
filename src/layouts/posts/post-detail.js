@@ -16,6 +16,7 @@ import * as utils from "../../graphql/queries";
 import moment from "moment";
 import Comments from './comment';
 import Tags from './tags';
+import PostMedia from './media';
 
 
 export default function PostDetail() {
@@ -71,16 +72,23 @@ export default function PostDetail() {
               </Grid>
               <Grid item xs={12} md={12} xl={12}>
                 <Card>
+                <SuiBox pb={2} px={2} lineHeight={1.25}>
+                    <SuiTypography mt={2} variant="h5" fontWeight="medium" textTransform="capitalize">
+                      Media
+                    </SuiTypography>
+                    <Divider />
+                    <PostMedia media={postData?.media || []} />
+                  </SuiBox>
+                </Card>
+              </Grid>
+              <Grid item xs={12} md={12} xl={12}>
+                <Card>
                   <SuiBox pb={2} px={2} lineHeight={1.25}>
                     <SuiTypography mt={2} variant="h5" fontWeight="medium" textTransform="capitalize">
                       Comments
                     </SuiTypography>
-
                     <Divider />
-
                     <Comments comments={postData?.comments || []} />
-
-
                   </SuiBox>
                 </Card>
               </Grid>
