@@ -29,8 +29,8 @@ import {
   setFixedNavbar,
   setSidenavColor,
 } from "context";
+import { useAuthContext } from "context/auth-context";
 
-import UserContext from "../../context/userContext";
 
 function Configurator() {
   const [controller, dispatch] = useSoftUIController();
@@ -38,10 +38,10 @@ function Configurator() {
   const [disabled, setDisabled] = useState(false);
   const sidenavColors = ["primary", "dark", "info", "success", "warning", "error"];
 
-  const statee = useContext(UserContext);
+  const [, authDispatch] = useAuthContext();
 
-  const logout = () => {
-    statee.setUser("");
+  const handleLogout = () => {
+    authDispatch({ type: 'logout' });
   };
 
   // Use the useEffect hook to change the button state for the sidenav type based on window size.
@@ -192,7 +192,7 @@ function Configurator() {
 
         <SuiButton
           color="error"
-          onClick={() => logout()}
+          onClick={() => handleLogout()}
           variant={transparentSidenav ? "outlined" : "gradient"}
           disabled={disabled}
           fullWidth

@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 
 // react-router-dom components
 // import { Link } from "react-router-dom";
@@ -17,18 +17,48 @@ import CoverLayout from "layouts/authentication/components/CoverLayout";
 
 // Images
 import curved9 from "assets/images/curved-images/curved-6.jpg";
+import { useAuthContext } from "context/auth-context";
+import { useToasts } from "react-toast-notifications";
 
-import UserContext from "../../../context/userContext";
 
 function SignIn() {
   // const [rememberMe, setRememberMe] = useState(true);
-
   // const handleSetRememberMe = () => setRememberMe(!rememberMe);
 
-  const statee = useContext(UserContext);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
-  const logIN = () => {
-    statee.setUser("1");
+  const [, authDispatch] = useAuthContext();
+  const { addToast } = useToasts();
+
+  const handleLogin = () => {
+
+    const payload = {
+      email, password
+    };
+
+    if (payload.email == 'admin@snapoffer.com' && payload.password == '12345678') {
+      authDispatch({ 
+        type: 'login', 
+        payload: { 
+          id: 1, 
+          email: 'admin@snapoffer.com', 
+          firstName: 'Admin',
+          lastName: 'Snapoffer', 
+        } 
+      });
+      addToast('Login success.', {
+        appearance: "success",
+        autoDismiss: true,
+      });
+      return;
+    }
+
+    addToast('Invalid username or password.', {
+      appearance: "error",
+      autoDismiss: true,
+    });
+
   };
 
   return (
@@ -44,7 +74,7 @@ function SignIn() {
               Email
             </SuiTypography>
           </SuiBox>
-          <SuiInput type="email" placeholder="Email" />
+          <SuiInput type="email" placeholder="Email" onChange={e => setEmail(e.target.value)} />
         </SuiBox>
         <SuiBox mb={2}>
           <SuiBox mb={1} ml={0.5}>
@@ -52,7 +82,7 @@ function SignIn() {
               Password
             </SuiTypography>
           </SuiBox>
-          <SuiInput type="password" placeholder="Password" />
+          <SuiInput type="password" placeholder="Password" onChange={e => setPassword(e.target.value)} />
         </SuiBox>
         {/* <SuiBox display="flex" alignItems="center">
           <Switch checked={rememberMe} onChange={handleSetRememberMe} />
@@ -66,7 +96,7 @@ function SignIn() {
           </SuiTypography>
         </SuiBox> */}
         <SuiBox mt={4} mb={1}>
-          <SuiButton onClick={() => logIN()} variant="gradient" color="info" fullWidth>
+          <SuiButton onClick={() => handleLogin()} variant="gradient" color="info" fullWidth>
             sign in
           </SuiButton>
         </SuiBox>
