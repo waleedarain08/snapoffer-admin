@@ -6,7 +6,6 @@ import SuiBox from "components/SuiBox";
 import Switch from '@mui/material/Switch';
 import SuiTypography from "components/SuiTypography";
 import SuiAvatar from "components/SuiAvatar";
-import Dot from "assets/images/dot.png";
 
 import Table from "examples/Tables/Table";
 import { useNavigate } from "react-router-dom";
@@ -14,10 +13,10 @@ import { useQuery, useMutation } from "@apollo/client";
 import { useToasts } from "react-toast-notifications";
 import * as utils from "../../graphql/queries";
 import * as mutation from "../../graphql/mutation";
-import { UserType } from '../../constants';
 import DummyImage from "assets/images/dummy.png";
 
 import moment from "moment";
+import TablePagination from 'examples/Tables/Table/table-pagination';
 
 function Author({ image, name, email, rowData }) {
   const navigate = useNavigate();
@@ -100,6 +99,8 @@ const getFullName = (user) => {
   return `${user.firstName} ${user.lastName}`.trim();
 }
 
+const PER_PAGE_ITEMS = 10;
+const DEFAULT_PAGINATION_PARAMS = { total: 1, currentPage: 1, perPage: PER_PAGE_ITEMS };
 
 export default function Posts() {
   const navigate = useNavigate();
@@ -111,12 +112,26 @@ export default function Posts() {
 
 
   useEffect(() => {
-    refetch();
+    refetch({
+      pagination: {
+        perPage: PER_PAGE_ITEMS,
+        page: 1 /* defaults loads first page data */
+      }
+    });
   }, []);
 
   const handleChange = (e) => {
     setSearchField(e.target.value);
   };
+
+  const handleOnPageChange = (page) => {
+    refetch({
+      pagination: {
+        perPage: PER_PAGE_ITEMS,
+        page: page
+      }
+    });
+  }
 
   const filteredPersons = data?.getAllPosts?.data?.filter((row) =>
     row.title?.toLowerCase()?.includes(searchField?.toLowerCase())
@@ -177,6 +192,7 @@ export default function Posts() {
     Approved: <ApproveDisapprove {...row} onApproveDisapprove={approveDisapprovePost} />,
   }));
 
+  const pagination = data?.getAllPosts?.pagination || DEFAULT_PAGINATION_PARAMS;
 
   return (
     <DashboardLayout>
@@ -198,6 +214,9 @@ export default function Posts() {
               }}
             >
               <Table columns={columns} rows={rows} />
+            </SuiBox>
+            <SuiBox mb={2} mt={2} mr={2}>
+              <TablePagination pages={pagination.total} onPageChange={handleOnPageChange} />
             </SuiBox>
           </Card>
         </SuiBox>
