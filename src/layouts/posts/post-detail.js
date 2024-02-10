@@ -60,7 +60,7 @@ export default function PostDetail() {
                     'Discount': postData?.discount || 'Na',
                     'Report Count': postData?.reportCount || 'Na',
 
-                    'Comment Count': postData?.commentCount || 'Na',
+                    'Comment Count': postData?.comments?.length || 'Na',
                     'Approved': postData?.approved ? 'Yes' : 'No',
                     'Tags': <Tags tags={postData?.tags || []} />,
                     'Created At': postData.createdAt ? moment(postData.createdAt).format("MM/DD/YYYY hh:mm:A") + ' - ' + moment(postData.createdAt).fromNow() : 'Na',

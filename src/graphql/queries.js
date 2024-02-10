@@ -170,7 +170,6 @@ query GetPostDetail($postId: Int) {
       isBookmark
       isOrder
       isFollow
-      commentCount
       approved
       comments {
         id

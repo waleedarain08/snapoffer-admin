@@ -123,7 +123,6 @@ mutation ApproveDisapprovePost($postId: Int!, $approved: Boolean!) {
       isBookmark
       isOrder
       isFollow
-      commentCount
       approved
     }
   }
