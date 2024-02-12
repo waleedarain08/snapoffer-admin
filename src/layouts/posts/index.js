@@ -143,7 +143,7 @@ export default function Posts() {
     { name: "Price", align: "left" },
     { name: "Discount", align: "left" },
     { name: "Report Count", align: "left" },
-    { name: "Expiary", align: "left" },
+    //{ name: "Expiry", align: "left" },
     { name: "Created", align: "left" },
     { name: "Approved", align: "center" },
   ];
@@ -179,11 +179,11 @@ export default function Posts() {
         {row.reportCount}
       </SuiTypography>
     ),
-    Expiary: (
-      <SuiTypography variant="caption" color="secondary" fontWeight="medium">
-        {moment(row.postExpireDate).format("MM/DD/YYYY")}
-      </SuiTypography>
-    ),
+    // Expiry: (
+    //   <SuiTypography variant="caption" color="secondary" fontWeight="medium">
+    //     {moment(row.postExpireDate).format("MM/DD/YYYY")}
+    //   </SuiTypography>
+    // ),
     Created: (
       <SuiTypography variant="caption" color="secondary" fontWeight="medium">
         {moment(row.createdAt).format("MM/DD/YYYY")}

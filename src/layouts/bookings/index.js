@@ -92,7 +92,7 @@ export default function Bookings() {
     { name: "User", align: "left" },
     { name: "Code", align: "left" },
     { name: "Phone", align: "left" },
-    { name: "Created", align: "center" },
+    { name: "City", align: "center" },
     { name: "action", align: "center" },
   ];
 
@@ -124,9 +124,9 @@ export default function Bookings() {
       { row.phoneNumber }
     </SuiTypography>
     ),
-    Created: (
+    City: (
       <SuiTypography variant="caption" color="secondary" fontWeight="medium">
-        {moment(row.createdAt).format("MM/DD/YYYY")}
+        {(row.city)}
       </SuiTypography>
     ),
     action: (

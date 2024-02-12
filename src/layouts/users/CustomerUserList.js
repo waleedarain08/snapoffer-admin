@@ -133,7 +133,7 @@ export default function BusinessUserList() {
     { name: "PhoneNumber", align: "center" },
     { name: "DOB", align: "center" },
     { name: "CreatedAt", align: "center" },
-    { name: "Type", align: "center" },
+    //{ name: "Type", align: "center" },
     { name: "Active", align: "center" },
   ];
 
@@ -154,16 +154,21 @@ export default function BusinessUserList() {
         {row.phoneNumber}
       </SuiTypography>
     ),
-    Created: (
+    DOB: (
+      <SuiTypography variant="caption" color="secondary" fontWeight="medium">
+        {moment(row.dob).format("DD/MM/YYYY")}
+      </SuiTypography>
+    ),
+    CreatedAt: (
       <SuiTypography variant="caption" color="secondary" fontWeight="medium">
         {moment(row.createdAt).format("DD/MM/YYYY")}
       </SuiTypography>
     ),
-    Type: (
-      <SuiTypography variant="caption" color="primary" fontWeight="large">
-        {row.type}
-      </SuiTypography>
-    ),
+    // Type: (
+    //   <SuiTypography variant="caption" color="primary" fontWeight="large">
+    //     {row.type}
+    //   </SuiTypography>
+    // ),
     Active: <ActiveInactive {...row} updateStatus={updateUserStatus} />
   }));
 
