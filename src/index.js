@@ -8,6 +8,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { SoftUIControllerProvider } from "context";
 import { ToastProvider } from "react-toast-notifications";
 import { ApolloClient, InMemoryCache, ApolloProvider } from "@apollo/client";
+import { AuthProvider, initialAuthState, authReducer } from "context/auth-context";
 
 const client = new ApolloClient({
   uri: "https://snapoffer-a69f05cdbe71.herokuapp.com/graphql",
@@ -19,7 +20,9 @@ ReactDOM.render(
     <ApolloProvider client={client}>
       <SoftUIControllerProvider>
         <ToastProvider>
-          <App />
+          <AuthProvider initialState={initialAuthState} reducer={authReducer}>
+            <App />
+          </AuthProvider>
         </ToastProvider>
       </SoftUIControllerProvider>
     </ApolloProvider>

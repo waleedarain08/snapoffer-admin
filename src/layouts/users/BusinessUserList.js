@@ -1,8 +1,8 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { useNavigate, useSearchParams } from "react-router-dom";
 // @mui material components
 import Card from "@mui/material/Card";
-
+import Switch from '@mui/material/Switch';
 // Soft UI Dashboard React components
 import SuiBox from "components/SuiBox";
 import SuiTypography from "components/SuiTypography";
@@ -22,12 +22,15 @@ import dummy from "assets/images/dummy.png";
 import moment from "moment";
 
 import { useQuery } from "@apollo/client";
+import { useMutation } from "@apollo/client";
 import * as utils from "../../graphql/queries";
+import { UserType } from '../../constants';
+import * as mutation from "../../graphql/mutation";
 
 function Author({ image, name, email, rowData }) {
   const navigate = useNavigate();
   const moveit = (alldata) => {
-    navigate("/userDetails", { state: { data: alldata } });
+    navigate("/user-details", { state: { data: alldata } });
   };
   return (
     <SuiBox
@@ -54,7 +57,6 @@ function Author({ image, name, email, rowData }) {
 }
 
 function Function({ city, country }) {
-  console.log(country);
   return (
     <SuiBox display="flex" flexDirection="column">
       <SuiTypography variant="caption" fontWeight="medium" color="text">
@@ -67,21 +69,57 @@ function Function({ city, country }) {
   );
 }
 
+function ActiveInactive({ id, status, updateStatus }) {
+
+  const handleOnChange = (e) => {
+    const value = e.target.checked;
+    const payload = { variables: { userId: id, status: value } };
+    updateStatus(payload);
+  }
+
+  return (
+    <Switch 
+      inputProps={{ 'aria-label': 'Active Inative User' }} 
+      checked={status}
+      onChange={handleOnChange} 
+    />
+  )
+}
+
 // const checked = () => {
 //   alert("asd");
 // };
 
-export default function allUsers() {
+export default function BusinessUserList() {
   //   const { columns, rows } = usersTableData;
   const [searchField, setSearchField] = useState("");
+  const [ searchParams ] = useSearchParams();
+
   // const [followsMe, setFollowsMe] = useState(true);
-  const { data } = useQuery(utils?.default?.GETALLUSERS);
+  const { data: queryData, refetch } = useQuery(utils?.default?.GETUSERSWHERE);
+
+  const [ updateUserStatus ] = useMutation(mutation?.default?.UPDATE_USER_STATUS);
 
   const handleChange = (e) => {
     setSearchField(e.target.value);
   };
 
-  const filteredPersons = data?.getAllUsers?.data?.filter(
+  useEffect(() => {
+    const email = searchParams.get('email');
+    const payload = {
+      where: {
+        type: UserType.Business
+      }
+    }
+    /* if email exists in the url */
+    if (email) {
+      /* append email in the query payload */
+      payload.where['email'] = email;
+    }
+    refetch(payload);
+  }, []);
+
+  const filteredPersons = queryData?.getAllUsers?.data?.filter(
     (row) =>
       row.firstName?.toLowerCase()?.includes(searchField?.toLowerCase()) ||
       row.lastName?.toLowerCase()?.includes(searchField?.toLowerCase())
@@ -91,9 +129,9 @@ export default function allUsers() {
     { name: "FullName", align: "left" },
     { name: "City", align: "left" },
     { name: "PhoneNumber", align: "center" },
-    { name: "DOB", align: "center" },
-    { name: "CreatedAt", align: "center" },
+    { name: "Created", align: "center" },
     { name: "Type", align: "center" },
+    { name: "Active", align: "center" },
   ];
 
   const rows = filteredPersons?.map((row) => ({
@@ -108,22 +146,22 @@ export default function allUsers() {
       />
     ),
     City: <Function city={row.city} />,
-    PhoneNumber: <Function city={row.phoneNumber} />,
-    DOB: (
+    PhoneNumber: (
       <SuiTypography variant="caption" color="secondary" fontWeight="medium">
-        {row.dob==null?"N/A":moment(row.dob).format("DD/MM/YYYY")}
+        {row.phoneNumber}
       </SuiTypography>
     ),
-    CreatedAt: (
+    Created: (
       <SuiTypography variant="caption" color="secondary" fontWeight="medium">
         {moment(row.createdAt).format("DD/MM/YYYY")}
       </SuiTypography>
     ),
     Type: (
-      <SuiTypography variant="caption" color="primary" fontWeight="large">
+      <SuiTypography variant="caption" color="secondary" fontWeight="medium">
         {row.type}
       </SuiTypography>
     ),
+    Active: <ActiveInactive {...row} updateStatus={updateUserStatus} />
   }));
 
   return (
@@ -133,7 +171,7 @@ export default function allUsers() {
         <SuiBox mb={3}>
           <Card>
             <SuiBox display="flex" justifyContent="space-between" alignItems="center" p={3}>
-              <SuiTypography variant="h6">All User</SuiTypography>
+              <SuiTypography variant="h6">Business Users</SuiTypography>
             </SuiBox>
             <SuiBox
               sx={{

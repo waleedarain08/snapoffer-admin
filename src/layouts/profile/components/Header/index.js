@@ -114,7 +114,7 @@ function Header({ usersData, onClick, tabValue }) {
                 sx={{ background: "transparent" }}
               >
                 <Tab label="Info" icon={<Cube />} />
-                <Tab label="Gallery" icon={<Document />} />
+                {/* <Tab label="Gallery" icon={<Document />} /> */}
                 {/* <Tab label="Settings" icon={<Settings />} /> */}
               </Tabs>
             </AppBar>

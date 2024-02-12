@@ -16,6 +16,7 @@ import GradientLineChart from "examples/Charts/LineCharts/GradientLineChart";
 
 // Soft UI Dashboard React base styles
 import typography from "assets/theme/base/typography";
+import * as utils from "../../graphql/queries";
 
 // Dashboard layout components
 // import BuildByDevelopers from "layouts/dashboard/components/BuildByDevelopers";
@@ -26,10 +27,25 @@ import OrderOverview from "layouts/dashboard/components/OrderOverview";
 // Data
 import reportsBarChartData from "layouts/dashboard/data/reportsBarChartData";
 import gradientLineChartData from "layouts/dashboard/data/gradientLineChartData";
+import { useQuery } from "@apollo/client";
+import { useEffect } from "react";
 
 function Dashboard() {
   const { size } = typography;
   const { chart, items } = reportsBarChartData;
+
+  const { data, refetch } = useQuery(utils?.default?.GET_DASHBOARD_DATA);
+
+  useEffect(() => {
+    refetch();
+  }, []);
+
+  const businessCount = data?.getBusinessCount?.data ?? 0;
+  const customersCount = data?.countCustomerUsers?.data ?? 0;
+  const postsCount = data?.getPostsCount?.data ?? 0;
+  const bookingsCount = data?.getBookingsCount?.data ?? 0;
+  const commentsCount = data?.getCommentsCount?.data ?? 0;
+  const likesCount = data?.getLikesCount?.data ?? 0;
 
   return (
     <DashboardLayout>
@@ -39,49 +55,67 @@ function Dashboard() {
           <Grid container spacing={3}>
             <Grid item xs={12} sm={6} xl={3}>
               <MiniStatisticsCard
-                title={{ text: "Total Customers" }}
-                count="4"
-               // percentage={{ color: "success", text: "+55%" }}
+                title={{ text: "Businesses" }}
+                count={businessCount}
+                // percentage={{ color: "success", text: "+55%" }}
                 icon={{ color: "info", component: "paid" }}
               />
             </Grid>
             <Grid item xs={12} sm={6} xl={3}>
               <MiniStatisticsCard
-                title={{ text: "Total Businesses" }}
-                count="1"
-               // percentage={{ color: "success", text: "+3%" }}
+                title={{ text: "Customers" }}
+                count={customersCount}
+                // percentage={{ color: "success", text: "+3%" }}
                 icon={{ color: "info", component: "public" }}
               />
             </Grid>
             <Grid item xs={12} sm={6} xl={3}>
               <MiniStatisticsCard
-                title={{ text: "Total Categories" }}
-                count="12"
-                //percentage={{ color: "error", text: "-2%" }}
+                title={{ text: "Posts" }}
+                count={postsCount}
+                // percentage={{ color: "error", text: "-2%" }}
                 icon={{ color: "info", component: "emoji_events" }}
               />
             </Grid>
             <Grid item xs={12} sm={6} xl={3}>
               <MiniStatisticsCard
-                title={{ text: "Total Posts" }}
-                count="5"
-                //percentage={{ color: "success", text: "+5%" }}
-                icon={{
-                  color: "info",
-                  component: "shopping_cart",
-                }}
+                title={{ text: "Bookings" }}
+                count={bookingsCount}
+                // percentage={{ color: "success", text: "+55%" }}
+                icon={{ color: "info", component: "paid" }}
               />
             </Grid>
+            {/* <Grid item xs={12} sm={6} xl={3}>
+              <MiniStatisticsCard
+                title={{ text: "Comments" }}
+                count={commentsCount}
+                // percentage={{ color: "success", text: "+55%" }}
+                icon={{ color: "info", component: "paid" }}
+              />
+            </Grid>
+            <Grid item xs={12} sm={6} xl={3}>
+              <MiniStatisticsCard
+                title={{ text: "Likes" }}
+                count={likesCount}
+                // percentage={{ color: "success", text: "+55%" }}
+                icon={{ color: "info", component: "paid" }}
+              />
+            </Grid> */}
           </Grid>
         </SuiBox>
-        {/* <SuiBox mb={3}>
+        <SuiBox mb={3}>
           <Grid container spacing={3}>
-           
+            {/* <Grid item xs={12} lg={7}>
+              <BuildByDevelopers />
+            </Grid> */}
+            {/* <Grid item xs={12} lg={5}>
+              <WorkWithTheRockets />
+            </Grid> */}
           </Grid>
-        </SuiBox> */}
-        {/* <SuiBox mb={3}>
+        </SuiBox>
+        <SuiBox mb={3}>
           <Grid container spacing={3}>
-            <Grid item xs={12} lg={5}>
+            {/* <Grid item xs={12} lg={5}>
               <ReportsBarChart
                 title="active users"
                 description={
@@ -92,37 +126,37 @@ function Dashboard() {
                 chart={chart}
                 items={items}
               />
-            </Grid>
-            <Grid item xs={12} lg={7}>
+            </Grid> */}
+            {/* <Grid item xs={12} lg={12}>
               <GradientLineChart
-                title="Sales Overview"
-                description={
-                  <SuiBox display="flex" alignItems="center">
-                    <SuiBox fontSize={size.lg} color="success" mb={0.3} mr={0.5} lineHeight={0}>
-                      <Icon className="font-bold">arrow_upward</Icon>
-                    </SuiBox>
-                    <SuiTypography variant="button" color="text" fontWeight="medium">
-                      4% more{" "}
-                      <SuiTypography variant="button" color="text" fontWeight="regular">
-                        in 2021
-                      </SuiTypography>
-                    </SuiTypography>
-                  </SuiBox>
-                }
-                height="20.25rem"
+                title="Users Overview"
+                // description={
+                //   <SuiBox display="flex" alignItems="center">
+                //     <SuiBox fontSize={size.lg} color="success" mb={0.3} mr={0.5} lineHeight={0}>
+                //       <Icon className="font-bold">arrow_upward</Icon>
+                //     </SuiBox>
+                //     <SuiTypography variant="button" color="text" fontWeight="medium">
+                //       4% more{" "}
+                //       <SuiTypography variant="button" color="text" fontWeight="regular">
+                //         in 2021
+                //       </SuiTypography>
+                //     </SuiTypography>
+                //   </SuiBox>
+                // }
+                height="30.25rem"
                 chart={gradientLineChartData}
               />
-            </Grid>
+            </Grid> */}
           </Grid>
-        </SuiBox> */}
-        {/* <Grid container spacing={3}>
-          <Grid item xs={12} md={6} lg={8}>
+        </SuiBox>
+        <Grid container spacing={3}>
+          {/* <Grid item xs={12} md={6} lg={8}>
             <Projects />
           </Grid>
           <Grid item xs={12} md={6} lg={4}>
             <OrderOverview />
-          </Grid>
-        </Grid> */}
+          </Grid> */}
+        </Grid>
       </SuiBox>
       {/* <Footer /> */}
     </DashboardLayout>

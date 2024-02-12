@@ -31,34 +31,17 @@ import SignIn from "layouts/authentication/sign-in";
 
 // Images
 import brand from "assets/images/logo-ct.png";
+import { useAuthContext } from "context/auth-context";
 
-import UserContext from "./context/userContext";
 
 export default function App() {
   const [controller, dispatch] = useSoftUIController();
   const { miniSidenav, direction, openConfigurator, sidenavColor } = controller;
   const [onMouseEnter, setOnMouseEnter] = useState(false);
-  const [user, setUser] = useState("asdasd");
   // const [rtlCache, setRtlCache] = useState(null);
   const { pathname } = useLocation();
+  const [authState] = useAuthContext();
 
-  const value = useMemo(
-    () => ({
-      user,
-      setUser,
-    }),
-    [user]
-  );
-
-  // Cache for the rtl
-  // useMemo(() => {
-  //   const cacheRtl = createCache({
-  //     key: "rtl",
-  //     stylisPlugins: [rtlPlugin],
-  //   });
-
-  //   setRtlCache(cacheRtl);
-  // }, []);
 
   // Open sidenav when mouse enter on mini sidenav
   const handleOnMouseEnter = () => {
@@ -130,9 +113,8 @@ export default function App() {
   );
 
   return (
-    <UserContext.Provider value={value}>
       <ThemeProvider theme={theme}>
-        {user ? (
+        { authState?.isLoggedIn ? (
           <>
             <CssBaseline />
             <>
@@ -156,6 +138,5 @@ export default function App() {
           <SignIn />
         )}
       </ThemeProvider>
-    </UserContext.Provider>
   );
 }

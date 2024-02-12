@@ -5,12 +5,21 @@ import Tables from "layouts/tables";
 import Category from "layouts/categorys";
 import AddCategory from "layouts/categorys/addCategory";
 import EditCategory from "layouts/categorys/editCategory";
+import Packages from 'layouts/packages';
+import AddPackage from 'layouts/packages/add-package';
+
+import Posts from 'layouts/posts';
+import PostDetail from 'layouts/posts/post-detail';
+
+import Bookings from 'layouts/bookings';
+
 // import VirtualReality from "layouts/virtual-reality";
 // import RTL from "layouts/rtl";
 import Profile from "layouts/profile";
 // import SignIn from "layouts/authentication/sign-in";
 // import SignUp from "layouts/authentication/sign-up";
-import Users from "layouts/users/allUsers";
+import BusinessUserList from "layouts/users/BusinessUserList";
+import CustomerUserList from "layouts/users/CustomerUserList";
 import UserDetails from "layouts/users/userProfile/userDetails";
 
 // Soft UI Dashboard React icons
@@ -49,13 +58,73 @@ const routes = [
   // },
   {
     type: "collapse",
-    name: "Customer/Business",
-    key: "users",
-    route: "/users",
-    icon: <Office size="12px" />,
-    component: <Users />,
+    name: "Bookings",
+    key: "bookings",
+    route: "/bookings",
+    icon: <CreditCard size="12px" />,
+    component: <Bookings />,
     noCollapse: true,
     isSideBarActive: true,
+  },
+  {
+    type: "collapse",
+    name: "Business Users",
+    key: "business-users",
+    route: "/business-users",
+    icon: <Office size="12px" />,
+    component: <BusinessUserList />,
+    noCollapse: true,
+    isSideBarActive: true,
+  },
+  {
+    type: "collapse",
+    name: "Customer Users",
+    key: "customer-users",
+    route: "/customer-users",
+    icon: <Office size="12px" />,
+    component: <CustomerUserList />,
+    noCollapse: true,
+    isSideBarActive: true,
+  },
+  {
+    type: "collapse",
+    name: "Packages",
+    key: "packages",
+    route: "/packages",
+    icon: <CustomerSupport size="12px" />,
+    component: <Packages />,
+    noCollapse: true,
+    isSideBarActive: true,
+  },
+  {
+    type: "collapse",
+    name: "Posts",
+    key: "posts",
+    route: "/posts",
+    icon: <CustomerSupport size="12px" />,
+    component: <Posts />,
+    noCollapse: true,
+    isSideBarActive: true,
+  },
+  {
+    type: "collapse",
+    name: "Post Detail",
+    key: "post-detail",
+    route: "/posts/detail",
+    icon: <CustomerSupport size="12px" />,
+    component: <PostDetail />,
+    noCollapse: true,
+    isSideBarActive: false,
+  },
+  {
+    type: "collapse",
+    name: "Add Package",
+    key: "add-package",
+    route: "/packages/add",
+    icon: <CustomerSupport size="12px" />,
+    component: <AddPackage />,
+    noCollapse: true,
+    isSideBarActive: false,
   },
   // {
   //   type: "collapse",
@@ -108,9 +177,9 @@ const routes = [
   // },
   {
     type: "collapse",
-    name: "UserDetails",
+    name: "User Details",
     key: "userDetails",
-    route: "/userDetails",
+    route: "/user-details",
     icon: <CustomerSupport size="12px" />,
     component: <UserDetails />,
     noCollapse: true,
