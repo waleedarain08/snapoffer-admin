@@ -156,7 +156,7 @@ export default function BusinessUserList() {
     ),
     DOB: (
       <SuiTypography variant="caption" color="secondary" fontWeight="medium">
-        {moment(row.dob).format("DD/MM/YYYY")}
+        {row.dob===null?"N/A":moment(row.dob).format("DD/MM/YYYY")}
       </SuiTypography>
     ),
     CreatedAt: (
