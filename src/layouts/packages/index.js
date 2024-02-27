@@ -95,7 +95,7 @@ export default function Packages() {
     ),
     Duration: (
       <SuiTypography variant="caption" color="secondary" fontWeight="medium">
-        {row.duration} { row.duration > 1 ? 'minutes' : 'minute' }
+        {row.duration} { row.duration > 1 ? 'seconds' : 'second' }
       </SuiTypography>
     ),
     Status: (
