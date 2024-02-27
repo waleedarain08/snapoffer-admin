@@ -52,7 +52,7 @@ export default function Packages() {
     { name: "Story", align: "center" },
     { name: "Duration", align: "center" },
     { name: "Status", align: "center" },
-    { name: "Created", align: "center" },
+    // { name: "Created", align: "center" },
     { name: "action", align: "center" },
   ];
 
@@ -103,11 +103,11 @@ export default function Packages() {
         {row.status == 1 ? 'Active' : 'InActive' }
       </SuiTypography>
     ),
-    Created: (
-      <SuiTypography variant="caption" color="secondary" fontWeight="medium">
-        {moment(row.createdAt).format("MM/DD/YYYY")}
-      </SuiTypography>
-    ),
+    // Created: (
+    //   <SuiTypography variant="caption" color="secondary" fontWeight="medium">
+    //     {row.createdAt}
+    //   </SuiTypography>
+    // ),
     action: (
       <>
         <SuiTypography
