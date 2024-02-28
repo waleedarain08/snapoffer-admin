@@ -93,6 +93,7 @@ export default function Bookings() {
     { name: "Code", align: "left" },
     { name: "Phone", align: "left" },
     { name: "City", align: "center" },
+    { name: "Provider", align: "center" },
     { name: "Redeem_Status", align: "center" },
     { name: "action", align: "center" },
   ];
@@ -128,6 +129,11 @@ export default function Bookings() {
     City: (
       <SuiTypography variant="caption" color="secondary" fontWeight="medium">
         {(row.city)}
+      </SuiTypography>
+    ),
+    Provider: (
+      <SuiTypography variant="caption" color="secondary" fontWeight="medium">
+        {(row.business.businessName)}
       </SuiTypography>
     ),
     Redeem_Status: (

@@ -213,6 +213,13 @@ query GetBookings {
       postId
       userId
       businessId
+      business {
+        businessName
+        user {
+          firstName
+          lastName
+        }
+      }
       email
       firstName
       lastName
