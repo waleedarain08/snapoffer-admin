@@ -155,13 +155,13 @@ export default function AddPackage() {
                       <SuiBox mb={2}>
                         <SuiBox mb={2} ml={0.5}>
                           <SuiTypography component="label" variant="caption" fontWeight="bold">
-                            Duration
+                            Package Expiry in Days
                           </SuiTypography>
                         </SuiBox>
                         <SuiInput
                           onChange={(e) => setDuration(e.target.value)}
                           type="number"
-                          placeholder="Duration"
+                          placeholder="Enter no of days"
                         />
                       </SuiBox>
                     </SuiBox>

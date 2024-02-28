@@ -50,7 +50,7 @@ export default function Packages() {
     { name: "Photos", align: "center" },
     { name: "Video", align: "center" },
     { name: "Story", align: "center" },
-    { name: "Duration", align: "center" },
+    { name: "Expiry", align: "center" },
     { name: "Status", align: "center" },
     // { name: "Created", align: "center" },
     { name: "action", align: "center" },
@@ -93,9 +93,9 @@ export default function Packages() {
         {row.story}
       </SuiTypography>
     ),
-    Duration: (
+    Expiry: (
       <SuiTypography variant="caption" color="secondary" fontWeight="medium">
-        {row.duration} { row.duration > 1 ? 'seconds' : 'second' }
+        { row.duration + ' days' }
       </SuiTypography>
     ),
     Status: (
