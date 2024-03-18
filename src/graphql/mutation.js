@@ -98,6 +98,28 @@ mutation AddNewPackage(
 }
 `;
 
+const EDIT_PACKAGE = gql`
+mutation EditPackage($id: Int!, $name: String, $photos: Int, $video: Int, $story: Int, $status: Int, $duration: Int, $price: String) {
+  editPackage(id: $id, name: $name, photos: $photos, video: $video, story: $story, status: $status, duration: $duration, price: $price) {
+    status
+    message
+    error
+    data {
+      id
+      name
+      photos
+      video
+      story
+      status
+      duration
+      price
+      created_at
+      updated_at
+    }
+  }
+}
+`;
+
 const APPROVE_DISAPPROVE_POST = gql`
 mutation ApproveDisapprovePost($postId: Int!, $approved: Boolean!, $rejectedReason: String) {
   approvePost(postId: $postId, approved: $approved, rejectedReason: $rejectedReason) {
@@ -160,6 +182,7 @@ export default {
   DELETECATEGORY,
   UPDATE_USER_STATUS,
   ADD_PACKAGE,
+  EDIT_PACKAGE,
   DELETE_PACKAGE,
   APPROVE_DISAPPROVE_POST,
   DELETE_BOOKING,

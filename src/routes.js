@@ -7,6 +7,7 @@ import AddCategory from "layouts/categorys/addCategory";
 import EditCategory from "layouts/categorys/editCategory";
 import Packages from 'layouts/packages';
 import AddPackage from 'layouts/packages/add-package';
+import EditPackage from 'layouts/packages/edit-package';
 
 import Posts from 'layouts/posts';
 import PostDetail from 'layouts/posts/post-detail';
@@ -233,6 +234,16 @@ const routes = [
     route: "/Addsubcategory",
     icon: <CustomerSupport size="12px" />,
     component: <Addsubcategory />,
+    noCollapse: true,
+    isSideBarActive: false,
+  },
+  {
+    type: "collapse",
+    name: "EditPackage",
+    key: "EditPackage",
+    route: "/packages/edit",
+    icon: <CustomerSupport size="12px" />,
+    component: <EditPackage />,
     noCollapse: true,
     isSideBarActive: false,
   },

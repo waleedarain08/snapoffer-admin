@@ -56,7 +56,7 @@ export default function Packages() {
     { name: "action", align: "center" },
   ];
 
-  const handleDeletePackage = (id) => {
+  const handleDeletePackage = ({ id }) => {
     const answer = window.confirm("Are you sure you want to delete this package");
     if (answer) {
       deletePackage({
@@ -66,6 +66,10 @@ export default function Packages() {
       });
     }
   };
+
+  const handleEditPackage = (row) => {
+    navigate("/packages/edit", { state: { data: row } });
+  }
 
   const rows = filteredPersons?.map((row) => ({
     Name: (
@@ -112,7 +116,20 @@ export default function Packages() {
       <>
         <SuiTypography
           style={{ cursor: "pointer" }}
-          onClick={() => handleDeletePackage(row?.id)}
+          onClick={() => handleEditPackage(row)}
+          component="a"
+          variant="caption"
+          color="secondary"
+          fontWeight="medium"
+        >
+          Edit
+        </SuiTypography>
+        <SuiTypography component="a" variant="caption" color="secondary" fontWeight="medium">
+          &nbsp;/&nbsp;
+        </SuiTypography>
+        <SuiTypography
+          style={{ cursor: "pointer" }}
+          onClick={() => handleDeletePackage(row)}
           component="a"
           variant="caption"
           color="error"
