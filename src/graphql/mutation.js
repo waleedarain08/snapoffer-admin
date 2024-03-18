@@ -99,8 +99,8 @@ mutation AddNewPackage(
 `;
 
 const APPROVE_DISAPPROVE_POST = gql`
-mutation ApproveDisapprovePost($postId: Int!, $approved: Boolean!) {
-  approvePost(postId: $postId, approved: $approved) {
+mutation ApproveDisapprovePost($postId: Int!, $approved: Boolean!, $rejectedReason: String) {
+  approvePost(postId: $postId, approved: $approved, rejectedReason: $rejectedReason) {
     status
     message
     error

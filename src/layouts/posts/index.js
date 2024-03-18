@@ -17,6 +17,7 @@ import DummyImage from "assets/images/dummy.png";
 
 import moment from "moment";
 import TablePagination from 'examples/Tables/Table/table-pagination';
+import ConfirmationDialog from 'examples/Dialogs/Confirmation.dialog';
 
 function Author({ image, name, email, rowData }) {
   const navigate = useNavigate();
@@ -77,20 +78,61 @@ function Title({ title, description, rowData }) {
   );
 }
 
-function ApproveDisapprove({ id, approved, onApproveDisapprove }) {
+function RejectPostSwitch({ id, approved, onRejectPost, refresh }) {
+
+  const [dialog, setDialog] = useState({
+    show: false,
+    title: null,
+    description: null,
+    confirmBtnText: null,
+  });
+  const rejected = !approved ?? false;
 
   const handleOnChange = (e) => {
-    const value = e.target.checked;
-    const payload = { variables: { postId: id, approved: value } };
-    onApproveDisapprove(payload);
+    const reject = e.target.checked;
+
+    if (reject) {
+      setDialog({ 
+        show: true, 
+        title: "Confirmation", 
+        description: "Please specify the reason why you want to disapprove this post ?",
+        confirmBtnText: 'Reject'
+      });
+      return;
+    }
+
+    /* approve the post and set rejected reason to null */
+    const payload = { variables: { postId: id, approved: true, rejectedReason: null } };
+    onRejectPost(payload);
+    if (refresh && typeof refresh === 'function') refresh();
   }
 
+  const handleSubmit = ({ text }) => {
+    const payload = { variables: { postId: id, approved: false, rejectedReason: text } };
+    onRejectPost(payload);
+    if (refresh && typeof refresh === 'function') refresh();
+    /* close the dialog */
+    setDialog({ show: false, title: null, description: null, confirmBtnText: null });
+  }
+
+  const handleCancel = () => {
+    /* close the dialog */
+    setDialog({ show: false, title: null, description: null, confirmBtnText: null });
+  }
+
+
   return (
-    <Switch 
-      inputProps={{ 'aria-label': 'Approve Disapprove Post' }} 
-      checked={approved}
-      onChange={handleOnChange} 
-    />
+    <React.Fragment>
+      <ConfirmationDialog {...dialog} 
+        onSubmit={handleSubmit} 
+        onCancel={handleCancel} 
+      />
+      <Switch 
+        inputProps={{ 'aria-label': 'Reject Post' }} 
+        checked={rejected}
+        onChange={handleOnChange} 
+      />
+    </React.Fragment>
   )
 }
 
@@ -109,7 +151,7 @@ export default function Posts() {
   const [searchField, setSearchField] = useState("");
   const { data, refetch } = useQuery(utils?.default?.GET_ALL_POSTS);
   const [ approveDisapprovePost ] = useMutation(mutation?.default?.APPROVE_DISAPPROVE_POST);
-
+  const [currentPage, setCurrentPage] = useState(1);
 
   useEffect(() => {
     refetch({
@@ -125,10 +167,20 @@ export default function Posts() {
   };
 
   const handleOnPageChange = (page) => {
+    setCurrentPage(page);
     refetch({
       pagination: {
         perPage: PER_PAGE_ITEMS,
         page: page
+      }
+    });
+  }
+
+  const refreshPageData = () => {
+    refetch({
+      pagination: {
+        perPage: PER_PAGE_ITEMS,
+        page: currentPage
       }
     });
   }
@@ -145,7 +197,8 @@ export default function Posts() {
     { name: "Report Count", align: "left" },
     //{ name: "Expiry", align: "left" },
     { name: "Created", align: "left" },
-    { name: "Approved", align: "center" },
+    { name: "Rejected Reason", align: "left" },
+    { name: "Rejected", align: "center" },
   ];
 
   const rows = filteredPersons?.map((row) => ({
@@ -189,7 +242,12 @@ export default function Posts() {
         {moment(row.createdAt).format("MM/DD/YYYY")}
       </SuiTypography>
     ),
-    Approved: <ApproveDisapprove {...row} onApproveDisapprove={approveDisapprovePost} />,
+    'Rejected Reason':(
+      <SuiTypography variant="caption" color="secondary" fontWeight="medium">
+        {row?.rejectedReason || '-'}
+      </SuiTypography>
+    ), 
+    Rejected: <RejectPostSwitch {...row} onRejectPost={approveDisapprovePost} refresh={refreshPageData} />,
   }));
 
   const pagination = data?.getAllPosts?.pagination || DEFAULT_PAGINATION_PARAMS;

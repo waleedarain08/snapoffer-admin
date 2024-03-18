@@ -32,6 +32,7 @@ import SignIn from "layouts/authentication/sign-in";
 // Images
 import brand from "assets/images/logo-ct.png";
 import { useAuthContext } from "context/auth-context";
+import "./app.styles.css";
 
 
 export default function App() {

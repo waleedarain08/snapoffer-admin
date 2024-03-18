@@ -128,6 +128,7 @@ query GetAllPosts($pagination: PaginationInput) {
       createdAt
       updatedAt
       approved
+      rejectedReason
       user {
         id
         firstName
@@ -171,6 +172,7 @@ query GetPostDetail($postId: Int) {
       isOrder
       isFollow
       approved
+      rejectedReason
       comments {
         id
         comment

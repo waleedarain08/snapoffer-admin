@@ -52,6 +52,7 @@ export default function TablePagination({ pages, onPageChange }) {
         getPages()
           .map((pageNo) => (
             <SuiPagination 
+              key={pageNo}
               item 
               active={current == pageNo} 
               onClick={() => handleOnPageClick(pageNo)}>

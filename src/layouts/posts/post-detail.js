@@ -61,7 +61,8 @@ export default function PostDetail() {
                     'Report Count': postData?.reportCount || 'Na',
 
                     'Comment Count': postData?.comments?.length || 'Na',
-                    'Approved': postData?.approved ? 'Yes' : 'No',
+                    'Rejected': !postData?.approved ? 'Yes' : 'No',
+                    'Rejected Reason': postData?.rejectedReason ?? '-',
                     'Tags': <Tags tags={postData?.tags || []} />,
                     'Created At': postData.createdAt ? moment(postData.createdAt).format("MM/DD/YYYY hh:mm:A") + ' - ' + moment(postData.createdAt).fromNow() : 'Na',
                     'Updated At': postData.updatedAt ? moment(postData.updatedAt).format("MM/DD/YYYY hh:mm:A") + ' - ' + moment(postData.updatedAt).fromNow() : 'Na',
