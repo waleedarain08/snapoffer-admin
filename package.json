@@ -32,6 +32,7 @@
     "react-github-btn": "1.2.1",
     "react-router-dom": "6.2.1",
     "react-scripts": "5.0.0",
+    "react-sortable-hoc": "^2.0.0",
     "react-toast-notifications": "^2.5.1",
     "reactstrap": "^9.0.2",
     "stylis": "4.0.13",
@@ -47,8 +48,7 @@
     "install:clean": "rm -rf node_modules/ && rm -rf package-lock.json && npm install && npm start",
     "install:peer-deps": "npm install --legacy-peer-deps"
   },
-  "eslintConfig": {
-  },
+  "eslintConfig": {},
   "browserslist": {
     "production": [
       ">0.2%",
@@ -63,13 +63,13 @@
   },
   "devDependencies": {
     "eslint": "^7.11.0",
-		"eslint-config-airbnb": "^18.2.0",
-		"eslint-config-prettier": "^6.11.0",
-		"eslint-plugin-import": "^2.22.0",
-		"eslint-plugin-jsx-a11y": "^6.3.1",
-		"eslint-plugin-prettier": "^3.1.4",
-		"eslint-plugin-react": "^7.20.3",
-		"eslint-plugin-react-hooks": "^4.0.8",
-		"html-loader": "^4.2.0"
+    "eslint-config-airbnb": "^18.2.0",
+    "eslint-config-prettier": "^6.11.0",
+    "eslint-plugin-import": "^2.22.0",
+    "eslint-plugin-jsx-a11y": "^6.3.1",
+    "eslint-plugin-prettier": "^3.1.4",
+    "eslint-plugin-react": "^7.20.3",
+    "eslint-plugin-react-hooks": "^4.0.8",
+    "html-loader": "^4.2.0"
   }
 }

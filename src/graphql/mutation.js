@@ -10,8 +10,8 @@ const ADDCATEGORY = gql`
 `;
 
 const ADDUPDATE = gql`
-  mutation UpdateCategory($updateCategoryId: Int, $name: String) {
-    updateCategory(id: $updateCategoryId, name: $name) {
+  mutation UpdateCategory($updateCategoryId: Int, $name: String, $index: Int) {
+    updateCategory(id: $updateCategoryId, name: $name, index: $index) {
       status
       message
     }

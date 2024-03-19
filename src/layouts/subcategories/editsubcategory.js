@@ -34,6 +34,7 @@ function Editsubcategory() {
     variables: {
       updateCategoryId: location?.state?.data?.id,
       name: newCategory,
+      index: location?.state?.data?.index,
     },
   });
 

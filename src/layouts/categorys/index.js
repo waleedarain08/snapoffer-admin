@@ -20,10 +20,11 @@ import Dot from "assets/images/dot.png";
 
 // import usersTableData from "layouts/users/data/usersTableData";
 import moment from "moment";
+import DragableTable from 'examples/Tables/Table/DragableTable';
 
 import { useQuery, useMutation } from "@apollo/client";
 import * as utils from "../../graphql/queries";
-import * as Allmutaions from "../../graphql/mutation";
+import * as mutation from "../../graphql/mutation";
 
 function Author({ image, name, email, rowData }) {
   const navigate = useNavigate();
@@ -67,7 +68,8 @@ export default function Category() {
       },
     },
   });
-  const [Deletecategory, { data: newDAta }] = useMutation(Allmutaions?.default?.DELETECATEGORY);
+  const [Deletecategory, { data: newDAta }] = useMutation(mutation?.default?.DELETECATEGORY);
+  const [UpdateCategory, { data: updateData }] = useMutation(mutation?.default?.ADDUPDATE);
 
   useEffect(() => {
     if (newDAta?.deleteCategory?.status) {
@@ -149,7 +151,32 @@ export default function Category() {
         </SuiTypography>
       </>
     ),
+    __row: row,
   }));
+
+  const handleOnOrderChange = ({ oldItem, newItem, newIndex, oldIndex }) => {
+    const { __row: a } = oldItem;
+    const { __row: b } = newItem;
+
+    UpdateCategory({ variables: {
+      updateCategoryId: a.id,
+      name: a.name,
+      index: newIndex,
+    }});
+
+    UpdateCategory({ variables: {
+      updateCategoryId: b.id,
+      name: b.name,
+      index: oldIndex,
+    }});
+  }
+
+  useEffect(() => {
+    if (updateData?.updateCategory?.status) {
+      refetch();
+    }
+  }, [updateData]);
+
   return (
     <DashboardLayout>
       <DashboardNavbar onChange={handleChange} />
@@ -179,7 +206,7 @@ export default function Category() {
                 },
               }}
             >
-              <Table columns={columns} rows={rows} />
+              <DragableTable columns={columns} rows={rows} onOrderChange={handleOnOrderChange} />
             </SuiBox>
           </Card>
         </SuiBox>

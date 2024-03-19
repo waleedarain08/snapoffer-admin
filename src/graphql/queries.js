@@ -67,6 +67,7 @@ const GETALLCATEGORIES = gql`
         id
         parentId
         name
+        index
       }
     }
   }

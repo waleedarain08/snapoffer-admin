@@ -33,6 +33,7 @@ function editCategory() {
     variables: {
       updateCategoryId: location?.state?.data?.id,
       name: newCategory,
+      index: location?.state?.data?.index,
     },
   });
   useEffect(() => {
