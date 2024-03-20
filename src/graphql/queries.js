@@ -53,6 +53,10 @@ const GETUSERSWHERE = gql`
         updatedAt
         providerId
         registrationType
+        business {
+          id
+          isFree
+        }
       }
     }
   }

@@ -86,9 +86,25 @@ function ActiveInactive({ id, status, updateStatus }) {
   )
 }
 
-// const checked = () => {
-//   alert("asd");
-// };
+function FreeAccessSwitch({ business, updateBusiness }) {
+
+  const businessId = business.id;
+  const isFree = business.isFree;
+
+  const handleOnChange = (e) => {
+    const value = e.target.checked;
+    const payload = { variables: { businessId: businessId, isFree: value } };
+    updateBusiness(payload);
+  }
+
+  return (
+    <Switch 
+      inputProps={{ 'aria-label': 'Allow Free Access' }} 
+      checked={isFree}
+      onChange={handleOnChange} 
+    />
+  )
+}
 
 export default function BusinessUserList() {
   //   const { columns, rows } = usersTableData;
@@ -99,6 +115,7 @@ export default function BusinessUserList() {
   const { data: queryData, refetch } = useQuery(utils?.default?.GETUSERSWHERE);
 
   const [ updateUserStatus ] = useMutation(mutation?.default?.UPDATE_USER_STATUS);
+  const [ updateBusiness ] = useMutation(mutation?.default?.UPDATE_BUSINESS)
 
   const handleChange = (e) => {
     setSearchField(e.target.value);
@@ -131,6 +148,7 @@ export default function BusinessUserList() {
     { name: "PhoneNumber", align: "center" },
     { name: "Created", align: "center" },
     { name: "Type", align: "center" },
+    { name: 'Free Access', align: "center" },
     { name: "Active", align: "center" },
   ];
 
@@ -161,6 +179,7 @@ export default function BusinessUserList() {
         {row.type}
       </SuiTypography>
     ),
+    'Free Access': <FreeAccessSwitch {...row} updateBusiness={updateBusiness} />,
     Active: <ActiveInactive {...row} updateStatus={updateUserStatus} />
   }));
 

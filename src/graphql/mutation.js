@@ -175,6 +175,22 @@ mutation DeleteBooking($bookingId: Int!) {
 }
 `
 
+const UPDATE_BUSINESS = gql`
+  mutation UpdateBusiness($businessId: Int!, $isFree: Boolean) {
+    updateBusiness(businessId: $businessId, isFree: $isFree) {
+      status
+      message
+      error
+      data {
+        id
+        isFree
+        createdAt
+        updatedAt
+      }
+    }
+  }
+`;
+
 export default {
   ADDCATEGORY,
   ADDUPDATE,
@@ -186,4 +202,5 @@ export default {
   DELETE_PACKAGE,
   APPROVE_DISAPPROVE_POST,
   DELETE_BOOKING,
+  UPDATE_BUSINESS,
 };
