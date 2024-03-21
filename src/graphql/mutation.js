@@ -176,14 +176,16 @@ mutation DeleteBooking($bookingId: Int!) {
 `
 
 const UPDATE_BUSINESS = gql`
-  mutation UpdateBusiness($businessId: Int!, $isFree: Boolean) {
-    updateBusiness(businessId: $businessId, isFree: $isFree) {
+  mutation UpdateBusiness($businessId: Int!, $isFree: Boolean, $category: String, $subCategory: String) {
+    updateBusiness(businessId: $businessId, isFree: $isFree, category: $category, subCategory: $subCategory) {
       status
       message
       error
       data {
         id
         isFree
+        category
+        subCategory
         createdAt
         updatedAt
       }

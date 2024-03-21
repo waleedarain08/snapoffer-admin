@@ -158,6 +158,12 @@ query GetPostDetail($postId: Int) {
         firstName
         lastName
         avatar
+        business {
+          id
+          website
+          category
+          subCategory
+        }
       }
       subscriptionId
       title
