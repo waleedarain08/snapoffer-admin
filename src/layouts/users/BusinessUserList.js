@@ -88,11 +88,16 @@ function ActiveInactive({ id, status, updateStatus }) {
 
 function FreeAccessSwitch({ business, updateBusiness }) {
 
-  const businessId = business.id;
-  const isFree = business.isFree;
+  const businessId = business?.id ?? null;
+  const isFree = business?.isFree ?? false;
 
   const handleOnChange = (e) => {
     const value = e.target.checked;
+
+    if (!businessId) {
+      return alert(`Business information doesn't exists for this user!`);
+    }
+
     const payload = { variables: { businessId: businessId, isFree: value } };
     updateBusiness(payload);
   }
