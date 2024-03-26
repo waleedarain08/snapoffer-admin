@@ -86,26 +86,25 @@ function ActiveInactive({ id, status, updateStatus }) {
   )
 }
 
-function FreeAccessSwitch({ business, updateBusiness }) {
+function FreeAccessSwitch({ id, type, isFree }) {
 
-  const businessId = business?.id ?? null;
-  const isFree = business?.isFree ?? false;
+  const [ updateProfile ] = useMutation(mutation?.default?.UPDATE_USER_PROFILE)
 
   const handleOnChange = (e) => {
     const value = e.target.checked;
 
-    if (!businessId) {
-      return alert(`Business information doesn't exists for this user!`);
+    if (!id) {
+      return alert('Id property doesnot exists for this user.');
     }
 
-    const payload = { variables: { businessId: businessId, isFree: value } };
-    updateBusiness(payload);
+    const payload = { variables: { id: id, type: type, isFree: value } };
+    updateProfile(payload);
   }
 
   return (
     <Switch 
       inputProps={{ 'aria-label': 'Allow Free Access' }} 
-      checked={isFree}
+      checked={isFree ?? false}
       onChange={handleOnChange} 
     />
   )
@@ -120,7 +119,6 @@ export default function BusinessUserList() {
   const { data: queryData, refetch } = useQuery(utils?.default?.GETUSERSWHERE);
 
   const [ updateUserStatus ] = useMutation(mutation?.default?.UPDATE_USER_STATUS);
-  const [ updateBusiness ] = useMutation(mutation?.default?.UPDATE_BUSINESS)
 
   const handleChange = (e) => {
     setSearchField(e.target.value);
@@ -184,7 +182,7 @@ export default function BusinessUserList() {
         {row.type}
       </SuiTypography>
     ),
-    'Free Access': <FreeAccessSwitch {...row} updateBusiness={updateBusiness} />,
+    'Free Access': <FreeAccessSwitch {...row} />,
     Active: <ActiveInactive {...row} updateStatus={updateUserStatus} />
   }));
 

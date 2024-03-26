@@ -46,6 +46,7 @@ const GETUSERSWHERE = gql`
         city
         type
         status
+        isFree
         stripeCustomerId
         createdAt
         deviceId
@@ -53,10 +54,6 @@ const GETUSERSWHERE = gql`
         updatedAt
         providerId
         registrationType
-        business {
-          id
-          isFree
-        }
       }
     }
   }

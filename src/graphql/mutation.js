@@ -50,6 +50,40 @@ const UPDATE_USER_STATUS = gql`
   }
 `;
 
+const UPDATE_USER_PROFILE = gql`
+mutation UpdateProfile($id: Int!, $type: Type!, $firstName: String, $isFree: Boolean) {
+  updateProfile(id: $id, type: $type, firstName: $firstName, isFree: $isFree) {
+    status
+    message
+    error
+    data {
+      id
+      email
+      firstName
+      lastName
+      avatar
+      dob
+      phoneNumber
+      country
+      city
+      password
+      deviceId
+      resetToken
+      type
+      status
+      stripeCustomerId
+      isVerified
+      createdAt
+      updatedAt
+      fcmToken
+      providerId
+      registrationType
+      isFree
+    }
+  }
+}
+`;
+
 const DELETE_PACKAGE = gql`
   mutation DeletePackage($packageId: Int!) {
     deletePackage(id: $packageId) {
@@ -199,6 +233,7 @@ export default {
   ADDSUBCATEGORY,
   DELETECATEGORY,
   UPDATE_USER_STATUS,
+  UPDATE_USER_PROFILE,
   ADD_PACKAGE,
   EDIT_PACKAGE,
   DELETE_PACKAGE,
