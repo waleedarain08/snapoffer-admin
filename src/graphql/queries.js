@@ -127,6 +127,7 @@ query GetAllPosts($pagination: PaginationInput) {
       price
       discount
       reportCount
+      showTop
       createdAt
       updatedAt
       approved
@@ -168,6 +169,7 @@ query GetPostDetail($postId: Int) {
       locationTitle
       location
       expireDate
+      showTop
       postExpireDate
       reportCount
       price

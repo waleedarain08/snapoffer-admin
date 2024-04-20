@@ -227,6 +227,37 @@ const UPDATE_BUSINESS = gql`
   }
 `;
 
+const UPDATE_POST = gql`
+mutation UpdatePost($postId: Int!, $showTop: Boolean) {
+  updatePost(postId: $postId, showTop: $showTop) {
+    status
+    message
+    error
+    data {
+      id
+      title
+      postExpireDate
+      price
+      discount
+      reportCount
+      showTop
+      createdAt
+      updatedAt
+      approved
+      rejectedReason
+      user {
+        id
+        firstName
+        lastName
+        email
+        avatar
+        type
+      }    
+    }
+  }
+}
+`;
+
 export default {
   ADDCATEGORY,
   ADDUPDATE,
@@ -240,4 +271,5 @@ export default {
   APPROVE_DISAPPROVE_POST,
   DELETE_BOOKING,
   UPDATE_BUSINESS,
+  UPDATE_POST,
 };

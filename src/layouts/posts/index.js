@@ -136,6 +136,29 @@ function RejectPostSwitch({ id, approved, onRejectPost, refresh }) {
   )
 }
 
+function ShowTopSwitch({ id, showTop, onUpdatePost, refresh }) {
+
+  const handleOnChange = (e) => {
+    const checked = e.target.checked;
+
+    /* set the show top flag to true */
+    const payload = { variables: { postId: id, showTop: checked } };
+    onUpdatePost(payload);
+    if (refresh && typeof refresh === 'function') refresh();
+  }
+
+  return (
+    <React.Fragment>
+      <Switch 
+        inputProps={{ 'aria-label': 'Show on top' }} 
+        checked={showTop ?? false}
+        onChange={handleOnChange} 
+      />
+    </React.Fragment>
+  )
+}
+
+
 const getFullName = (user) => {
   if (!user) return "Na";
   return `${user.firstName} ${user.lastName}`.trim();
@@ -151,6 +174,7 @@ export default function Posts() {
   const [searchField, setSearchField] = useState("");
   const { data, refetch } = useQuery(utils?.default?.GET_ALL_POSTS);
   const [ approveDisapprovePost ] = useMutation(mutation?.default?.APPROVE_DISAPPROVE_POST);
+  const [ updatePost ] = useMutation(mutation?.default?.UPDATE_POST);
   const [currentPage, setCurrentPage] = useState(1);
   const [searchParams, setSearchParams] = useSearchParams();
 
@@ -210,6 +234,7 @@ export default function Posts() {
     { name: "Created", align: "left" },
     { name: "Rejected Reason", align: "left" },
     { name: "Rejected", align: "center" },
+    { name: 'Show Top', align: "center" },
   ];
 
   const rows = filteredPersons?.map((row) => ({
@@ -259,6 +284,9 @@ export default function Posts() {
       </SuiTypography>
     ), 
     Rejected: <RejectPostSwitch {...row} onRejectPost={approveDisapprovePost} refresh={refreshPageData} />,
+    'Show Top': (
+      <ShowTopSwitch {...row} onUpdatePost={updatePost} refresh={refreshPageData} />
+    ),
   }));
 
   const pagination = data?.getAllPosts?.pagination || DEFAULT_PAGINATION_PARAMS;
