@@ -95,6 +95,7 @@ export default function PostDetail() {
                     'Expire Date': postData?.expireDate ? moment(postData.expireDate).format("MM/DD/YYYY hh:mm:A") + ' - ' + moment(postData.expireDate).fromNow() : 'Na',
                     'Post Expire Date': postData?.postExpireDate ? moment(postData?.postExpireDate).format("MM/DD/YYYY hh:mm:A") + ' - ' + moment(postData?.postExpireDate).fromNow() : 'Na',
                     'Price': postData?.price || 'Na',
+                    'Show Top': postData?.showTop ? 'True': 'False',
                     'Discount': postData?.discount || 'Na',
                     'Report Count': postData?.reportCount || 'Na',
 
