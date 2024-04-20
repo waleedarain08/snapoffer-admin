@@ -3,32 +3,22 @@ import SuiPagination from "components/SuiPagination";
 
 // @mui material components
 import Icon from "@mui/material/Icon";
-import { useState } from "react";
 
 
-export default function TablePagination({ pages, onPageChange }) {
-
-  const [current, setCurrent] = useState(1);
+export default function TablePagination({ page, pages, onPageChange }) {
 
   const handlePreviousClick = () => {
-    setCurrent((current) => {
-      const page = current == 1 ? current : current - 1;
-      if( onPageChange && page != current ) onPageChange(page);
-      return page;
-    });
+    const newPage = page == 1 ? page : page - 1;
+    if( onPageChange && newPage != page ) onPageChange(newPage);
   }
 
   const handleNextClick = () => {
-    setCurrent((current) => {
-      const page = current == pages ? current : current + 1;
-      if( onPageChange && page != current ) onPageChange(page);
-      return page;
-    });
+    const newPage = page == pages ? page : page + 1;
+    if( onPageChange && newPage != page ) onPageChange(newPage);
   }
 
   const handleOnPageClick = (pageno) => {
-    if( onPageChange && pageno != current ) onPageChange(pageno);
-    setCurrent(pageno);
+    if( onPageChange && pageno != page ) onPageChange(pageno);
   }
 
   const getPages = () => {
@@ -36,10 +26,10 @@ export default function TablePagination({ pages, onPageChange }) {
     if (pages < 6) return pageNumbers;
 
     const showFwdBwd = 2;
-    if (current < 3) return pageNumbers.slice(0, 5);
-    if (current > pages - 3) return pageNumbers.slice(pages - 5)
+    if (page < 3) return pageNumbers.slice(0, 5);
+    if (page > pages - 3) return pageNumbers.slice(pages - 5)
 
-    return pageNumbers.slice(current - showFwdBwd - 1, current + showFwdBwd);
+    return pageNumbers.slice(page - showFwdBwd - 1, page + showFwdBwd);
   }
 
   return (
@@ -54,7 +44,7 @@ export default function TablePagination({ pages, onPageChange }) {
             <SuiPagination 
               key={pageNo}
               item 
-              active={current == pageNo} 
+              active={page == pageNo} 
               onClick={() => handleOnPageClick(pageNo)}>
                 {pageNo}
             </SuiPagination>)

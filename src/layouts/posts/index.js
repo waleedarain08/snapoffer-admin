@@ -8,7 +8,7 @@ import SuiTypography from "components/SuiTypography";
 import SuiAvatar from "components/SuiAvatar";
 
 import Table from "examples/Tables/Table";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { useQuery, useMutation } from "@apollo/client";
 import { useToasts } from "react-toast-notifications";
 import * as utils from "../../graphql/queries";
@@ -152,12 +152,19 @@ export default function Posts() {
   const { data, refetch } = useQuery(utils?.default?.GET_ALL_POSTS);
   const [ approveDisapprovePost ] = useMutation(mutation?.default?.APPROVE_DISAPPROVE_POST);
   const [currentPage, setCurrentPage] = useState(1);
+  const [searchParams, setSearchParams] = useSearchParams();
 
   useEffect(() => {
+    const page = searchParams.get('page') && parseInt(searchParams.get('page'));
+    const isNaN = Number.isNaN(page);
+    if (!isNaN) {
+      setCurrentPage(page);
+    }
+
     refetch({
       pagination: {
         perPage: PER_PAGE_ITEMS,
-        page: 1 /* defaults loads first page data */
+        page: !isNaN ? page : 1, /* defaults loads first page data */
       }
     });
   }, []);
@@ -167,6 +174,10 @@ export default function Posts() {
   };
 
   const handleOnPageChange = (page) => {
+    /* update search param */
+    searchParams.set('page', page);
+    setSearchParams(searchParams, { replace: true });
+
     setCurrentPage(page);
     refetch({
       pagination: {
@@ -274,7 +285,7 @@ export default function Posts() {
               <Table columns={columns} rows={rows} />
             </SuiBox>
             <SuiBox mb={2} mt={2} mr={2}>
-              <TablePagination pages={pagination.total} onPageChange={handleOnPageChange} />
+              <TablePagination page={currentPage} pages={pagination.total} onPageChange={handleOnPageChange} />
             </SuiBox>
           </Card>
         </SuiBox>
